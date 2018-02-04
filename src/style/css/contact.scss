@@ -1,0 +1,65 @@
+.contact {
+    background-color: #fff;
+    padding: 20px 120px;
+}
+.contact .image img {
+    max-width: 100%;
+    border-radius: 5%;
+}
+.contact h1 {
+    font-family: "Open Sans", sans-serif;
+    font-size: 56.789px;
+    margin-bottom: 10px;
+}
+.contact hr {
+    margin: 16px 0;
+    border: none;
+    border-top: 2px solid rgba(30, 150, 250, 1);
+}
+.phonetic {
+    font-style: italic;
+    font-size: 16px;
+    color: grey;
+}
+.contact p, .contact i {
+    font-size: 22px;
+}
+.contact i {
+    margin-right: 0.4em;
+}
+.contact .material-icons {
+    vertical-align: middle;
+}
+.contact .social a {
+    display: inline-block;
+    font-size: 40px;
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+    vertical-align: middle;
+    text-align: center;
+    text-decoration: none;
+    margin-right: 22px;
+    margin-top: 12px;
+    transition: all 0.2s ease;
+}
+.contact .social a:hover {
+    box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.6);
+}
+.fa-facebook {
+    color: #fff;
+    background-color: #3b5998;
+}
+.fa-snapchat-ghost {
+    color: #fff;
+    background-color: #fffc00;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+.fa-instagram {
+    color: #fff;
+    background-color: #e95950;
+}
+.fa-github {
+    color: #fff;
+    background-color: #24292e;
+}

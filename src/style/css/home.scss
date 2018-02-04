@@ -1,0 +1,105 @@
+
+.home .row {
+    background-color: #fff;
+    position: relative;
+}
+.parallax-img {
+    display: block;
+    height: 105vh;
+    position: relative;
+    background-attachment: fixed;
+    background-position: 50% 0%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.home .intro {
+    padding: 60px 40px;
+}
+.home .intro h1 {
+    font-family: "Open Sans";
+    text-align: left;
+    font-weight: 400;
+    font-size: 60px;
+    margin-top: 0;
+}
+.home .intro p {
+    text-align: left;
+    font-weight: 300;
+    font-size: 25px;
+    line-height: 1.4;
+    margin-top: 14px;
+    margin-bottom: 0;
+}
+.home .intro-nav {
+    padding: 0;
+}
+.home .intro-nav .button {
+    position: absolute;
+    display: inline-block;
+    cursor: pointer;
+    width: 100px;
+    height: 100px;
+    padding: 0px 0px;
+    text-align: center;
+}
+.home .intro-nav .button svg {
+    color: #000;
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+}
+.home .intro-nav .button svg circle {
+    transition: stroke-dasharray 0.5s ease-out, stroke 0.2s;
+}
+.home .intro-nav .button:hover svg circle {
+    stroke-dasharray: 168, 0;
+    stroke: rgba(0, 0, 0, .7);
+}
+.home .button-prev {
+    bottom: 50%;
+    margin-bottom: 20px;
+}
+.home .button-next {
+    margin-top: 20px;
+    top: 50%;
+}
+.home .button-prev svg {
+    transform: scaleY(-1);
+}
+
+#animate-span {
+    cursor: pointer;
+    border-bottom: 1.5px dotted rgba(0, 0, 0, 1);
+    color: hsla(0, 100%, 0%, 1);
+    transition: all 0.5s ease-in-out;
+    animation: rainbow 2s infinite;
+    animation-fill-mode: forwards;
+    animation-play-state: paused;
+}
+#animate-span:hover {
+    animation-play-state: running;
+    border-bottom: 1.5px dotted rgba(0, 0, 0, 0);
+    letter-spacing: 10px;
+    font-size: 140%;
+    font-weight: 700;
+}
+
+@keyframes rainbow {
+    0%   {color: hsla(0, 100%, 50%, 1);}
+    25%  {color: hsla(90, 100%, 50%, 1);}
+    50%  {color: hsla(180, 100%, 50%, 1);}
+    75%  {color: hsla(270, 100%, 50%, 1);}
+    100%  {color: hsla(360, 100%, 50%, 1);}
+}
+
+@media only screen and (max-width: 768px) {
+    .home .parallax-parent {
+        background-attachment: scroll;
+    }
+    .home .molly {
+        background-position: 36% 0%;
+    }
+    .home .intro-nav .button {
+        visibility: hidden;
+    }
+}
