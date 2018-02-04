@@ -17,10 +17,10 @@ export default class Contact extends Component {
                         <p><i className="material-icons">mail_outline</i><a href="mailto:mindstorm1998@gmail.com">mindstorm1998@gmail.com</a></p>
                         <p><i className="material-icons">link</i><a href="https://www.av0c.com/">www.av0c.com</a> (Offline)</p>
                         <div className="row social">
-                            <a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/duongkinh.quyen" class="fa fa-facebook"></a>
-                            <a target="_blank" rel="noopener noreferrer" href="https://www.snapchat.com/add/av0cadodo" class="fa fa-snapchat-ghost"></a>
-                            <a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/av0c_ado/" class="fa fa-instagram"></a>
-                            <a target="_blank" rel="noopener noreferrer" href="https://github.com/Av0c" class="fa fa-github"></a>
+                            <a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/duongkinh.quyen" className="fa fa-facebook"></a>
+                            <a target="_blank" rel="noopener noreferrer" href="https://www.snapchat.com/add/av0cadodo" className="fa fa-snapchat-ghost"></a>
+                            <a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/av0c_ado/" className="fa fa-instagram"></a>
+                            <a target="_blank" rel="noopener noreferrer" href="https://github.com/Av0c" className="fa fa-github"></a>
                         </div>
                     </div>
                 </div>
