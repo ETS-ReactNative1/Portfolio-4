@@ -61,6 +61,10 @@ export default class Home extends Component {
         window.addEventListener("scroll", this.handleScroll);
     }
 
+    componentWillUnmount() {
+        window.removeEventListener("scroll", this.handleScroll);
+    }
+
     handleScroll() {
         var scrollTop = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
         var pageBottom = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);

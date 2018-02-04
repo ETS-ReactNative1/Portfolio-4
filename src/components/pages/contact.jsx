@@ -11,7 +11,7 @@ export default class Contact extends Component {
                     </div>
                     <div className="col-7 col-m-12 pull-right">
                         <h1>Quyen Duong</h1>
-                        <span class="phonetic">(/kwiːn ˈduoʊŋ/)</span>
+                        <span className="phonetic">(/kwiːn ˈduoʊŋ/)</span>
                         <hr></hr>
                         <p><i className="material-icons">phone_android</i>+358 (0) 417 276 866</p>
                         <p><i className="material-icons">mail_outline</i><a href="mailto:mindstorm1998@gmail.com">mindstorm1998@gmail.com</a></p>

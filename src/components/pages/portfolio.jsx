@@ -32,22 +32,31 @@ class Clock extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            text: "asd",
-            time: 0,
+            text: "sh",
+            timeInt: null,
             startTime: 1517664613623,
+            isCounting: false,
         };
 
         this.getTime = this.getTime.bind(this);
-        this.getRandomLetter = this.getRandomLetter.bind(this);
+        this.getRandomString = this.getRandomString.bind(this);
         this.shuffleText = this.shuffleText.bind(this);
     }
 
     componentDidMount() {
-        this.getTime();
-        this.shuffleText("HELLOOOOOOO", 10000, 50);
-        var countInt = setInterval(() => {
+        this.shuffleText("Thisissobeautiful", 4000, 50);
+        var timeInt = setInterval(() => {
             this.getTime();
         }, 1000);
+        this.setState({
+            timeInt: timeInt,
+        });
+    }
+
+    componentWillUnmount() {
+        var timeInt = this.state.timeInt;
+        clearInterval(timeInt);
+        console.log("UNMOUNT");
     }
 
     getTime() {
@@ -56,64 +65,73 @@ class Clock extends Component {
         this.setState({
             time: t,
         });
+        console.log("get time");
     }
 
-    getRandomLetter() {
+    getRandomString(length) {
         const code = "!@#$%^&*()+{};<>~\|/€";
-        var randomNum = Math.floor(Math.random()*code.length);
-        var randomLetter = code.substring(randomNum, randomNum+1);
-        return randomLetter;
+        var randomString = "";
+        while (randomString.length < length) {
+            var randomNum = Math.floor(Math.random()*code.length);
+            randomString += code.substring(randomNum, randomNum+1);
+        }
+
+        return randomString;
     }
 
-    shuffleText(newText, dur, intTime) {
-        var current = this.state.text;
-        var maxLoop = dur/intTime;
-        var runCount = 0;
-
-        var startCorrection = maxLoop - newText.length; // At which run will the letters start changing into correct ones
+    shuffleText(newText, timeLimit, intTime) {
+        var correctArray = []; // Array to keep position that has been corrected
 
         var int = setInterval(() => {
             var current = this.state.text;
 
-            /// TEXT RANDOMIZE
-            var willChangeCount = Math.floor(Math.max(current.length/2, Math.random()*current.length));
-            // Make an array of 'willChangeCount' random numbers with the upper limit of 'current.length'
-            var willChangeArray = [];
-            while(willChangeArray.length < willChangeCount){
-                var random = Math.floor(Math.random()*current.length);
-                if (willChangeArray.indexOf(random) > -1) {
-                    continue;
+            if (current.length !== newText.length) { // Add/Remove letters before correcting
+                var step = Math.sign(newText.length-current.length);
+                current
+                if (current.length < newText.length) {
+                    current = this.getRandomString(current.length+step);
+                } else {
+                    current = this.getRandomString(current.length+step);
                 }
-                willChangeArray[willChangeArray.length] = random;
-            }
-            // Loop through 'willChangeArray' and change letters at those index to random letters
-            for (var i = 0; i < willChangeCount; i++) {
-                var position = willChangeArray[i];
-                var replacement = this.getRandomLetter();
+            } else {
+                if (current !== newText) {
+                    var position = Math.floor(Math.random()*current.length);
 
-                var current = current.substr(0, position) + replacement + current.substr(position+replacement.length, current.length);
-            }
+                    while (correctArray.indexOf(position) > -1) {
+                        position = Math.floor(Math.random()*current.length);
+                    }
 
-            /// TEXT ADD
-            if (current.length < newText.length) {
-                var randomLetter = this.getRandomLetter();
-                current += randomLetter;
+                    correctArray.push(position);
+                    current = this.getRandomString(current.length);
+
+                    for (var i = 0; i < correctArray.length; i++) {
+                        var position = correctArray[i];
+                        var correction = newText.substring(position, position+1);
+                        current = current.substring(0, position) + correction + current.substring(position+correction.length, current.length);
+                    }
+
+                } else {
+                    clearInterval(int);
+                    this.setState({
+                        text: newText,
+                    });
+                    return;
+                }
             }
 
             this.setState({
                 text: current,
             });
 
-            runCount++;
-
         }, intTime);
 
-        var to = setTimeout(() => {
+        // Fallback if the transition takes way too long (you should make transition faster instead of relying on this - why? ugly.)
+        setTimeout(() => {
             clearInterval(int);
             this.setState({
                 text: newText,
             });
-        }, dur);
+        }, timeLimit);
     }
 
     render() {
@@ -160,11 +178,11 @@ export default class Portfolio extends Component {
         }
 
         cards.splice(2, 0,
-            <div className="card">
+            <div className="card" key="clock">
                 <div className="clock">
                     <div className="card-bg"></div>
                     <div className="card-text">
-                        {<Clock key={"clock"} />}
+                        {<Clock/>}
                         <p className="hidden">Time this website has been up for.</p>
                     </div>
                 </div>
