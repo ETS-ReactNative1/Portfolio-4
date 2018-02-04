@@ -1,0 +1,83 @@
+generateNavButtons(sectionId) {
+    return (
+        <div className="intro-nav col-2 col-offset-1 col-m-0">
+            <a className="button button-prev" href={"#" + this.state.sections[sectionId]}>
+                <svg>
+                    <circle cx="50" cy="50" r="40" stroke="rgba(0, 0, 0, 0)" strokeWidth="2" fill="none" strokeDasharray="0, 70" strokeLinecap="round" />
+                    <polyline points="30,42 50,62 70,42" stroke="rgba(0, 0, 0, 0.8)" strokeWidth="3" fill="none" />
+                </svg>
+            </a>
+            <a className="button button-next" href={"#" + this.state.sections[sectionId+2]}>
+                <svg>
+                    <circle cx="50" cy="50" r="40" stroke="rgba(0, 0, 0, 0)" strokeWidth="2" fill="none" strokeDasharray="0, 70" strokeLinecap="round" />
+                    <polyline points="30,42 50,62 70,42" stroke="rgba(0, 0, 0, 0.8)" strokeWidth="3" fill="none" />
+                </svg>
+            </a>
+        </div>
+    );
+}
+
+generateAnchors(sectionId) {
+    return (
+        <div className="anchor" id={this.state.sections[sectionId]}></div>
+    );
+}
+
+
+<div className="home-container">
+    {this.generateAnchors(0)}
+
+    <div className="parallax-img" id="logo" style={{backgroundImage: "url(" + logo + ")"}}></div>
+
+    {this.generateAnchors(1)}
+    <div className="row">
+        <div className="intro col-6 col-offset-3 col-m-12 col-offset-m-0">
+            <h1 style={{color: colors[0]}}>Hello there</h1>
+            <p>My name is Quyen Duong.<br></br>I&#8217;m a front-end developer living, studying and working in Vaasa, Finland.</p>
+        </div>
+        {this.generateNavButtons(0)}
+        <button onClick={() => {this.nextSection()}}>TEST</button>
+    </div>
+
+    <div className="parallax-img" id="vaasa" style={{backgroundImage: "url(" + vaasa + ")"}}></div>
+
+    {this.generateAnchors(2)}
+    <div className="row">
+        <div className="intro col-6 col-offset-3 col-m-12 col-offset-m-0">
+            <h1 style={{color: colors[1]}}>What I do..</h1>
+            <p>I develop beautiful websites, and equip them with an equally pleasant user-interface.</p>
+            <p>When 90% of time spent on digital devices is spent online, a delicate webpage is becoming the new catchy store banner.</p>
+        </div>
+        {this.generateNavButtons(1)}
+    </div>
+
+    <div className="parallax-img" id="material" style={{backgroundImage: "url(" + material + ")"}}></div>
+
+    {this.generateAnchors(3)}
+    <div className="row">
+        <div className="intro col-6 col-offset-3 col-m-12 col-offset-m-0">
+            <h1 style={{color: colors[2]}}>A bit of flavours..</h1>
+            <p>I enjoy games, designing as well as playing them.</p>
+            <p>I also love dogs, music, avocados and<br></br><span id="animate-span">css transition animations.</span></p>
+        </div>
+        {this.generateNavButtons(2)}
+    </div>
+
+    <div className="parallax-img" id="molly" style={{backgroundImage: "url(" + molly + ")"}}></div>
+
+    {this.generateAnchors(4)}
+    <div className="row">
+        <div className="intro col-6 col-offset-3 col-m-12 col-offset-m-0">
+            <h1 style={{color: colors[3]}}>Enjoy your stay</h1>
+            <p>So you know all there is about me, now what ?</p>
+            <p>If you are just a curious visitor, I made this for you.</p>
+            <p>If you are an employer, please feel free to checkout my portfolio.</p>
+            <p>Got something to say? To the contact section you go!</p>
+        </div>
+        {this.generateNavButtons(3)}
+    </div>
+
+    {this.generateAnchors(5)}
+    <div className="parallax-img" id="space" style={{backgroundImage: "url(" + space + ")"}}></div>
+
+</div>
