@@ -1,3 +1,11 @@
+## Today I learned
+- `substring` and `substr` in JavaScript are actually [completely different methods](https://stackoverflow.com/questions/3745515/what-is-the-difference-between-substr-and-substring). (Spent 3 hours fixing a bug due to this)
+
+
+
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
