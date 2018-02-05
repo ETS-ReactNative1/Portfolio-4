@@ -25,7 +25,7 @@ export default class Nav extends Component {
 
     render() {
         return(
-            <div className="nav row">
+            <div className="nav-container row">
                 <div className={(this.state.show ? "opened " : "") + "menu-arrow"} onClick={() => {this.toggleMenu()}}>
                     <svg>
                         <g className="line">
