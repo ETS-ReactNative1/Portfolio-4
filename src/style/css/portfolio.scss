@@ -1,6 +1,12 @@
 .portfolio {
     padding: 40px 120px;
     font-size: 20px;
+    background-color: #282C35;
+    color: #fafafa;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    perspective: 800px;
 
     h1 {
         font-family: "Open Sans", sans-serif;
@@ -23,109 +29,97 @@
         justify-content: center;
     }
 
+    .explore {
+        position: fixed;
+        border-radius: 50%;
+        background-color: red;
+        top: 0;
+        left: 0;
+        width: 100px;
+        height: 100px;
+        box-shadow: 0px 8px 12px 0px rgba(0, 0, 0, 0.7);
+    }
+
     .card {
         box-sizing: border-box;
         flex: 1;
-        min-width: 350px;
-        max-width: 500px;
-        height: 280px;
+
+        width: 200px;
+        height: 200px;
         margin: 10px;
         text-align: center;
-        background-color: #282C35;
+        // background-color: #bdbdbd;
         color: #fafafa;
-        position: relative;
-        overflow: hidden;
-        transition: border-radius 0.4s ease-out;
+        position: absolute;
+        transform-style: preserve-3d;
+        transform: translateZ(-100px);
+        transition: transform 0.4s ease-out;
 
         &:hover {
-            .card-bg {
-                filter: blur(5px);
-                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            transform: translateZ(-100px) rotateY(90deg);
+            .card-cover {
+                // transform: rotateY(90deg);
+            }
+            .card-reveal {
+                // transform: rotateY(0deg);
             }
             .card-text {
-                color: rgb(24, 24, 28);
-                h1 {
-                    font-size: 55px;
-                    @media only screen and (max-width: 768px) {
-                        font-size: 42px;
-                    }
-                }
-                p.hidden {
-                    padding: 0 1.3em;
-                    margin-top: 0.5em;
-                    height: 60px;
-                    opacity: 1;
-                    letter-spacing: 0px;
-                    word-spacing: normal;
-
-                    @media only screen and (max-width: 768px) {
-                        height: 0;
-                    }
-                }
+                // color: rgb(24, 24, 28);
+                // h1 {
+                //     font-size: 55px;
+                //     @media only screen and (max-width: 768px) {
+                //         font-size: 42px;
+                //     }
+                // }
             }
         }
 
-        .clock {
+        .card-cover {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(141deg, #AB47BC 0%,  #26C6DA 90%);
+            transform: rotateY(0deg) translateZ(100px);
+        }
+
+        .card-reveal {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform: rotateY(-90deg) translateZ(100px);
+
             .card-bg {
-                background-color: rgb(115, 230, 237);
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background-position: center;
+                background-size: cover;
+                background-repeat: no-repeat;
+                filter: blur(0px);
+                z-index: 1;
+                transition: filter 0.2s ease 0.4s;
             }
+            .card-text {
+                position: absolute;
+                display: block;
+                width: 100%;
+                top: 50%;
+                text-align: center;
+                transform: translateY(-50%);
+                z-index: 2;
 
-            #clock-display {
-                font-family: "Roboto Mono", monospace;
+                h1 {
+                    display: inline-block;
+                    margin: auto;
+                    font-size: 42px;
+                    border: 0;
+                    position: relative;
+                    transition: all 0.4s ease-out;
+                    @media only screen and (max-width: 768px) {
+                        font-size: 36px;
+                    }
+                }
             }
-        }
-    }
-
-    .card-bg {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        clip-path: polygon(75% 0, 75% 0, 25% 100%, 25% 100%);
-        filter: blur(0px);
-        transition: clip-path 0.4s ease-out, filter 0.2s ease 0.4s;
-    }
-    .card-text {
-        position: absolute;
-        display: block;
-        width: 100%;
-        top: 50%;
-        text-align: center;
-        transform: translateY(-50%);
-
-        h1 {
-            display: inline-block;
-            margin: auto;
-            font-size: 42px;
-            border: 0;
-            position: relative;
-            transition: all 0.4s ease-out;
-            @media only screen and (max-width: 768px) {
-                font-size: 36px;
-            }
-        }
-        p.hidden {
-            font-size: 21px;
-            text-align: center;
-            padding: 0 1.3em;
-            margin: 0;
-            height: 0;
-            letter-spacing: -7px;
-            opacity: 0;
-            transition: all 0.4s ease-out;
-
-            @media only screen and (max-width: 768px) {
-                visibility: hidden;
-                height: 0;
-            }
-        }
-
-    }
-    .card-desc {
-        p {
-            font-size: 18px;
         }
     }
 }
