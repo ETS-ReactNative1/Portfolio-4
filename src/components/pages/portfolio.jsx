@@ -1,78 +1,6 @@
 import React, { Component } from 'react';
-import quads from 'img/portfolio/quads.png';
-import madcube from 'img/portfolio/madcube.png';
 
-class Card extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            show: false,
-            percentRadius: 0,
-            percentX: 0,
-            percentY: 0,
-        };
-        this.setPosition = this.setPosition.bind(this);
-        this.addEffect = this.addEffect.bind(this);
-    }
-
-    componentDidMount() {
-        // window.addEventListener("mouseover", () => {this.addEffect()} );
-        // window.addEventListener("mouseleave", () => {this.removeEffect()} );
-    }
-
-
-    addEffect() {
-        this.setState({
-            percentRadius: 50,
-        });
-        window.addEventListener("mousemove", (e) => {this.setPosition(e)} );
-        console.log("added");
-    }
-    removeEffect() {
-        this.setState({
-            percentRadius: 0,
-        });
-        window.removeEventListener("mousemove", (e) => {this.setPosition(e)} );
-        console.log("removed");
-    }
-
-    setPosition(e) {
-        var x = e.pageX-this.cardDiv.offsetLeft;
-        var y = e.pageY-this.cardDiv.offsetTop;
-        var widthX = this.cardDiv.offsetWidth;
-        var heightY = this.cardDiv.offsetHeight;
-
-        var percentX = Math.floor(x/widthX*100);
-        var percentY = Math.floor(y/heightY*100);
-
-        this.setState({
-            percentX: percentX,
-            percentY: percentY,
-        });
-
-        console.log("moved");
-    }
-
-    render() {
-        return(
-            <div className="card" ref={(div) => { this.cardDiv = div }}>
-                <div>
-                    <div className="card-cover"></div>
-                    <div className="card-reveal">
-                        {<div className="card-bg" style={{backgroundImage: "url(" + this.props.img + ")"}}></div>
-                        // <div className="card-text">
-                        //     <h1>{this.props.header}</h1>
-                        // </div>
-                        }
-                    </div>
-                </div>
-                <div className={(this.state.show ? "opened " : "") + "card-desc"}>
-
-                </div>
-            </div>
-        );
-    }
-}
+import cardsData from 'data/portfolio.xml';
 
 class Clock extends Component {
     constructor(props) {
@@ -201,57 +129,192 @@ class Clock extends Component {
             <h1>{this.state.hour}:{this.state.minute}:{this.state.second}</h1>
         );
     }
-
 }
 
+class Card extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            show: false,
+            percentRadius: 0,
+            percentX: 0,
+            percentY: 0,
+        };
+        this.setPosition = this.setPosition.bind(this);
+        this.addEffect = this.addEffect.bind(this);
+    }
 
-export default class Portfolio extends Component {
+    componentDidMount() {
+        // window.addEventListener("mouseover", () => {this.addEffect()} );
+        // window.addEventListener("mouseleave", () => {this.removeEffect()} );
+    }
+    //
+    // flipCard(id) {
+    //     this.setState({
+    //         flipped: !this.state.flipped,
+    //     });
+    // }
+
+    addEffect() {
+        this.setState({
+            percentRadius: 50,
+        });
+        window.addEventListener("mousemove", (e) => {this.setPosition(e)} );
+        console.log("added");
+    }
+    removeEffect() {
+        this.setState({
+            percentRadius: 0,
+        });
+        window.removeEventListener("mousemove", (e) => {this.setPosition(e)} );
+        console.log("removed");
+    }
+
+    setPosition(e) {
+        var x = e.pageX-this.cardDiv.offsetLeft;
+        var y = e.pageY-this.cardDiv.offsetTop;
+        var widthX = this.cardDiv.offsetWidth;
+        var heightY = this.cardDiv.offsetHeight;
+
+        var percentX = Math.floor(x/widthX*100);
+        var percentY = Math.floor(y/heightY*100);
+
+        this.setState({
+            percentX: percentX,
+            percentY: percentY,
+        });
+
+        console.log("moved");
+    }
+
     render() {
-        const contents = [
-            [
-                quads,
-                "QuaDs",
-                "A musical tap game developed and published for Android.",
-                <span>
-                    <p>QuaDs was my first game that's ever released. I started working on it on my last year of highschool and finished one year later, the game was then released to Google Play at the start of 2017.</p>
-                    <p>The engine used was GameMaker Studio, it uses GML (GameMaker Language) which is very similar to Javascript. All in-game assets were made by me. The most challenging part however was the sound, where I had to slice songs into notes, which plays as the player taps in the game.</p>
-                </span>
-            ],
-            // [
-            //     madcube,
-            //     "MadCube",
-            //     "A 48-hour video games hackathon project. Developed with Unity.",
-            //
-            // ],
-        ];
+        return(
+        <div className={(this.props.flipped ? "flipped " : "") + "card"} onClick={() => {this.props.onClick(this.props.id)} }>
+            <div>
+                <div className="card-cover"></div>
+                <div className="card-reveal">
+                    <div className="card-bg" style={{backgroundImage: "url(" + this.props.img + ")"}}></div>
 
+                </div>
+            </div>
+            <div className={(this.state.show ? "opened " : "") + "card-desc"}>
+            </div>
+        </div>
+        );
+    }
+}
+
+class CardContainer extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            contents: null,
+            showModal: false,
+            currentModal: 0,
+            cardsFlipState: [],
+        };
+
+        this.getData = this.getData.bind(this);
+        this.cardCheck = this.cardCheck.bind(this);
+        this.showModal = this.showModal.bind(this);
+    }
+
+    componentDidMount() {
+        this.getData();
+    }
+
+    cardCheck(id) {
+        console.log(id);
+        var {cardsFlipState} = this.state;
+        cardsFlipState[id] = !cardsFlipState[id];
+        this.setState({
+            cardsFlipState: cardsFlipState,
+        });
+    }
+
+    showModal(id) {
+        this.setState({
+            showModal: true,
+            currentModal: id,
+        });
+    }
+
+    getData() {
+        var req = new XMLHttpRequest();
+		req.onreadystatechange = () => {
+			if (req.readyState === 4) {
+				if (req.status === 200) {
+					var response = req.responseXML;
+                    var cards = response.getElementsByTagName("Card");
+                    var contents = [];
+                    var cardsFlipState = [];
+                    for (var i = 0; i < cards.length; i++) {
+                        contents[i] = {};
+                        var img = cards[i].getElementsByTagName("Img")[0].childNodes[0].nodeValue;
+                        contents[i].img = this.props.images[img];
+                        contents[i].name = cards[i].getElementsByTagName("Name")[0].childNodes[0].nodeValue;
+                        contents[i].header = cards[i].getElementsByTagName("Header")[0].childNodes[0].nodeValue;
+                        contents[i].desc = cards[i].getElementsByTagName("Desc")[0].childNodes[0].nodeValue;
+                        contents[i].modalContent = cards[i].getElementsByTagName("ModalContent")[0].childNodes[0].nodeValue;
+                        cardsFlipState[i] = false;
+                    }
+                    this.setState({
+                        contents: contents,
+                        cardsFlipState: cardsFlipState,
+                    });
+				}
+			}
+		};
+        req.open("GET", cardsData, true);
+		req.send();
+    }
+
+    render() {
+        var allCards = [];
         var cards = [];
-
-        for (var i = 0; i < contents.length; i++) {
-            cards.push(
-                <Card
-                    key={i}
-                    img={contents[i][0]}
-                    header={contents[i][1]}
-                    text={contents[i][2]}
-                    desc={contents[i][3]}
-                />
-            );
+        var {contents, cardsFlipState} = this.state;
+        if (contents && cardsFlipState) {
+            for (var i = 0; i < contents.length; i++) {
+                allCards.push(
+                    <Card
+                        key={i}
+                        id={i}
+                        name={contents[i].id}
+                        img={[contents[i].img]}
+                        header={contents[i].header}
+                        desc={contents[i].desc}
+                        onClick={(id) => {this.cardCheck(id)}}
+                        flipped={cardsFlipState[i]}
+                    />
+                );
+            }
         }
 
-        // cards.splice(2, 0,
-        //     <div className="card" key="clock">
-        //         <div className="clock">
-        //             <div className="card-cover"></div>
-        //             <div className="card-bg"></div>
-        //             <div className="card-text">
-        //                 {<Clock/>}
-        //                 <p className="hidden">Time this website has been up for.</p>
-        //             </div>
-        //         </div>
-        //     </div>
-        // );
+        return (
+            <div>{allCards}</div>
+        );
+    }
+}
 
+export default class Portfolio extends Component {
+
+    constructor(props) {
+        super(props);
+        this.importAll = this.importAll.bind(this);
+    }
+
+    componentDidMount() {
+    }
+
+    importAll(r) {
+        var images = {};
+        r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
+        return images;
+    }
+
+    render() {
+        var images = this.importAll(require.context('img/portfolio', false, /\.(png|jpe?g|svg)$/));
+        console.log(images);
         return (
             <div className="portfolio">
                 <div className="intro">
@@ -268,7 +331,7 @@ export default class Portfolio extends Component {
                         <div className="col-12">
                             <div className="card-center">
                                 <div className="card-container">
-                                    {cards}
+                                    <CardContainer images={images}/>
                                 </div>
                             </div>
                         </div>
