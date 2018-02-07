@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import cardsData from 'data/portfolio.xml';
+import cardData from 'data/portfolio.xml';
 
 class Clock extends Component {
     constructor(props) {
@@ -210,25 +210,108 @@ class CardContainer extends React.Component {
         this.state = {
             contents: null,
             showModal: false,
-            currentModal: 0,
-            cardsFlipState: [],
+            currentModal: null,
+            cardFlipState: [],
+            selection: [],
         };
 
         this.getData = this.getData.bind(this);
-        this.cardCheck = this.cardCheck.bind(this);
         this.showModal = this.showModal.bind(this);
+        this.cardClick = this.cardClick.bind(this);
+        this.cardFlipUp = this.cardFlipUp.bind(this);
+        this.cardFlipDown = this.cardFlipDown.bind(this);
+        this.cardFlipToggle = this.cardFlipToggle.bind(this);
+        // this.cardSelect = this.cardSelect.bind(this);
+        this.cardCheck = this.cardCheck.bind(this);
     }
 
     componentDidMount() {
         this.getData();
     }
 
+    cardClick(id) {
+        this.cardFlipToggle(id);
+        this.cardCheck(id);
+    }
+
     cardCheck(id) {
-        console.log(id);
-        var {cardsFlipState} = this.state;
-        cardsFlipState[id] = !cardsFlipState[id];
+        var {selection, contents} = this.state;
+        var index = selection.indexOf(id);
+        if (index <= -1) { // If card has not been selected
+            selection.push(id);
+        } else { // If card has been selected
+            selection.splice(index, 1);
+        }
+
+        var maxCards = 3;
+        if (selection.length >= 2) { // Atleast 2 cards selected
+            var equal = true;
+            var prev;
+            for (var i = 0; i < selection.length; i++) {
+                var name = contents[selection[i]].name;
+                if (i == 0) {
+                    prev = name;
+                    continue;
+                }
+                if (name != prev) {
+                    equal = false;
+                    console.log("breakie mcBreakFace");
+                    break;
+                }
+                prev = name;
+            }
+            var timeout = 500;
+            if (!equal) {
+                console.log("Sad");
+                setTimeout(() => {
+                    for (var i = 0; i < selection.length; i++) {
+                        this.cardFlipDown(selection[i]);
+                    }
+                    selection.splice(0, selection.length);
+                }, timeout);
+            } else {
+                if (selection.length >= maxCards) {
+                    console.log("Bingo");
+                    setTimeout(() => {
+                        for (var i = 0; i < selection.length; i++) {
+                            this.cardFlipDown(selection[i]);
+                        }
+                        selection.splice(0, selection.length);
+                    }, timeout);
+                }
+            }
+
+        }
+
         this.setState({
-            cardsFlipState: cardsFlipState,
+            selection: selection,
+        });
+    }
+
+    cardFlipToggle(id) {
+        console.log("toggle");
+        var {cardFlipState} = this.state;
+        cardFlipState[id] = !cardFlipState[id];
+        this.setState({
+            cardFlipState: cardFlipState,
+        });
+    }
+
+    cardFlipUp(id) {
+        console.log("up");
+        var {cardFlipState} = this.state;
+        cardFlipState[id] = true;
+        this.setState({
+            cardFlipState: cardFlipState,
+        });
+    }
+
+    cardFlipDown(id) {
+        console.log("down");
+        var {cardFlipState} = this.state;
+        cardFlipState[id] = false;
+        this.setState({
+            cardFlipState: cardFlipState,
         });
     }
 
@@ -247,42 +330,41 @@ class CardContainer extends React.Component {
 					var response = req.responseXML;
                     var cards = response.getElementsByTagName("Card");
                     var contents = [];
-                    var cardsFlipState = [];
-                    for (var i = 0; i < cards.length; i++) {
-                        contents[i] = {};
-                        var img = cards[i].getElementsByTagName("Img")[0].childNodes[0].nodeValue;
-                        contents[i].img = this.props.images[img];
-                        contents[i].name = cards[i].getElementsByTagName("Name")[0].childNodes[0].nodeValue;
-                        contents[i].header = cards[i].getElementsByTagName("Header")[0].childNodes[0].nodeValue;
-                        cardsFlipState[i] = false;
+                    var cardFlipState = [];
+                    for (var id = 0; id < cards.length; id++) {
+                        contents[id] = {};
+                        var img = cards[id].getElementsByTagName("Img")[0].childNodes[0].nodeValue;
+                        contents[id].img = this.props.images[img];
+                        contents[id].name = cards[id].getElementsByTagName("Name")[0].childNodes[0].nodeValue;
+                        contents[id].header = cards[id].getElementsByTagName("Header")[0].childNodes[0].nodeValue;
+                        cardFlipState[id] = false;
                     }
                     this.setState({
                         contents: contents,
-                        cardsFlipState: cardsFlipState,
+                        cardFlipState: cardFlipState,
                     });
 				}
 			}
 		};
-        req.open("GET", cardsData, true);
+        req.open("GET", cardData, true);
 		req.send();
     }
 
     render() {
         var allCards = [];
         var cards = [];
-        var {contents, cardsFlipState} = this.state;
-        if (contents && cardsFlipState) {
+        var {contents, cardFlipState} = this.state;
+        if (contents && cardFlipState) {
             for (var i = 0; i < contents.length; i++) {
                 allCards.push(
                     <Card
                         key={i}
                         id={i}
-                        name={contents[i].id}
+                        name={contents[i].name}
                         img={[contents[i].img]}
                         header={contents[i].header}
-                        desc={contents[i].desc}
-                        onClick={(id) => {this.cardCheck(id)}}
-                        flipped={cardsFlipState[i]}
+                        onClick={(id) => {this.cardClick(id)}}
+                        flipped={cardFlipState[i]}
                     />
                 );
             }
@@ -314,7 +396,6 @@ export default class Portfolio extends Component {
 
     render() {
         var images = this.importAll(require.context('img/portfolio', false, /\.(png|jpe?g|svg)$/));
-        console.log(images);
         return (
             <div className="portfolio">
                 <div className="intro">

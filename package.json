@@ -16,9 +16,16 @@
     "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
     "start-js": "react-scripts start",
     "start": "npm-run-all -p watch-css start-js",
-    "build-js": "react-scripts build",
+    "build-js": "react-scripts build && rm build/static/js/*.map",
+    "build-js-debug": "react-scripts build && rm build/static/js/*.map",
     "build": "npm-run-all build-css build-js",
+    "build-debug": "npm-run-all build-css build-js-debug",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "envify": "^4.1.0",
+    "uglify-js": "^3.3.9",
+    "uglifyify": "^4.0.5"
   }
 }

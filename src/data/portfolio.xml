@@ -25,6 +25,11 @@
         <Img>madcube.png</Img>
     </Card>
     <Card>
+        <Name>quads</Name>
+        <Header>QuaDs</Header>
+        <Img>quads.png</Img>
+    </Card>
+    <Card>
         <Name>madcube</Name>
         <Header>MadCube</Header>
         <Img>madcube.png</Img>
