@@ -254,8 +254,6 @@ class CardContainer extends React.Component {
                         contents[i].img = this.props.images[img];
                         contents[i].name = cards[i].getElementsByTagName("Name")[0].childNodes[0].nodeValue;
                         contents[i].header = cards[i].getElementsByTagName("Header")[0].childNodes[0].nodeValue;
-                        contents[i].desc = cards[i].getElementsByTagName("Desc")[0].childNodes[0].nodeValue;
-                        contents[i].modalContent = cards[i].getElementsByTagName("ModalContent")[0].childNodes[0].nodeValue;
                         cardsFlipState[i] = false;
                     }
                     this.setState({
@@ -291,7 +289,9 @@ class CardContainer extends React.Component {
         }
 
         return (
-            <div>{allCards}</div>
+            <div className="card-container">
+                {allCards}
+            </div>
         );
     }
 }
@@ -330,9 +330,7 @@ export default class Portfolio extends Component {
                     <div className="row">
                         <div className="col-12">
                             <div className="card-center">
-                                <div className="card-container">
-                                    <CardContainer images={images}/>
-                                </div>
+                                <CardContainer images={images}/>
                             </div>
                         </div>
                     </div>
