@@ -1,5 +1,6 @@
 ## Today I learned
 - `substring` and `substr` in JavaScript are actually [completely different methods](https://stackoverflow.com/questions/3745515/what-is-the-difference-between-substr-and-substring). (Spent 3 hours fixing a bug due to this)
+- Setting key-value pair to an array of objects in JS require you to set that array position to something first. See [this](https://stackoverflow.com/questions/7479520/javascript-cannot-set-property-of-undefined).
 
 
 

@@ -29,7 +29,7 @@ class Section extends Component {
         return(
             <div>
                 <div className={"parallax-img " + this.props.imageName} style={{backgroundImage: "url(" + this.props.image + ")"}}></div>
-                <div className="row">
+                <div className="row section-row">
                     <div className="intro col-6 col-offset-3 col-m-12 col-m-offset-0">
                         <h1 style={{color: this.props.color}}>{this.props.header}</h1>
                         {this.props.text}
@@ -81,7 +81,7 @@ export default class Home extends Component {
     }
 
     scrollTo(element) {
-        var scrollElement = document.getElementsByClassName("row")[element+1];
+        var scrollElement = document.getElementsByClassName("section-row")[element];
         if (scrollElement) {
             var screenHeight = this.state.screenHeight;
             var divHeight = scrollElement.offsetHeight;
