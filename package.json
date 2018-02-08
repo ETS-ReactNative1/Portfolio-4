@@ -12,14 +12,15 @@
     "react-scripts": "1.1.0"
   },
   "scripts": {
-    "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
+    "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ && rm build/static/css/*.map",
+    "build-css-debug": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
     "start-js": "react-scripts start",
     "start": "npm-run-all -p watch-css start-js",
     "build-js": "react-scripts build && rm build/static/js/*.map",
     "build-js-debug": "react-scripts build && rm build/static/js/*.map",
     "build": "npm-run-all build-css build-js",
-    "build-debug": "npm-run-all build-css build-js-debug",
+    "build-debug": "npm-run-all build-css-debug build-js-debug",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
