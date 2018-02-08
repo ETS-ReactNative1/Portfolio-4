@@ -13,7 +13,6 @@ class Clock extends Component {
             timeInt: null,
             startTime: 1517664613623,
         };
-
         this.getTime = this.getTime.bind(this);
         this.getRandomString = this.getRandomString.bind(this);
         this.shuffleText = this.shuffleText.bind(this);
@@ -37,15 +36,12 @@ class Clock extends Component {
     getTime() {
         var d = new Date();
         var t = Math.floor( (d.getTime()-this.state.startTime)/1000 );
-
         var hour = Math.floor( (t/60)/60 );
         var minute = Math.floor( (t - hour*3600)/60 );
         var second = t - hour*3600 - minute*60;
-
         hour = ("0" + hour).slice(-2);
         minute = ("0" + minute).slice(-2);
         second = ("0" + second).slice(-2);
-
         if (hour !== this.state.hour) {
             this.shuffleText("hour", String(hour), 800, 50);
         }
@@ -64,17 +60,14 @@ class Clock extends Component {
             var randomNum = Math.floor(Math.random()*code.length);
             randomString += code.substring(randomNum, randomNum+1);
         }
-
         return randomString;
     }
 
     shuffleText(stateToChange, newText, timeLimit, intTime) {
         var correctArray = []; // Array to keep position that has been corrected
         var to;
-
         var int = setInterval(() => {
             var current = this.state[stateToChange];
-
             if (current.length !== newText.length) { // Add/Remove letters before correcting
                 var step = Math.sign(newText.length-current.length);
                 if (current.length < newText.length) {
@@ -84,21 +77,17 @@ class Clock extends Component {
                 }
             } else {
                 if (current !== newText) {
-
                     var position = Math.floor(Math.random()*current.length);
                     while (correctArray.indexOf(position) > -1) {
                         position = Math.floor(Math.random()*current.length);
                     }
-
                     correctArray.push(position);
                     current = this.getRandomString(current.length);
-
                     for (var i = 0; i < correctArray.length; i++) {
                         var correctPosition = correctArray[i];
                         var correction = newText.substring(correctPosition, correctPosition+1);
                         current = current.substring(0, correctPosition) + correction + current.substring(correctPosition+correction.length, current.length);
                     }
-
                 } else {
                     clearTimeout(to);
                     clearInterval(int);
@@ -108,13 +97,10 @@ class Clock extends Component {
                     return;
                 }
             }
-
             this.setState({
                 [stateToChange]: current,
             });
-
         }, intTime);
-
         // Fallback if the transition takes way too long (you should make transition faster instead of relying on this - why? ugly.)
         to = setTimeout(() => {
             clearInterval(int);
@@ -132,61 +118,6 @@ class Clock extends Component {
 }
 
 class Card extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            show: false,
-            percentRadius: 0,
-            percentX: 0,
-            percentY: 0,
-        };
-        this.setPosition = this.setPosition.bind(this);
-        this.addEffect = this.addEffect.bind(this);
-    }
-
-    componentDidMount() {
-        // window.addEventListener("mouseover", () => {this.addEffect()} );
-        // window.addEventListener("mouseleave", () => {this.removeEffect()} );
-    }
-    //
-    // flipCard(id) {
-    //     this.setState({
-    //         flipped: !this.state.flipped,
-    //     });
-    // }
-
-    addEffect() {
-        this.setState({
-            percentRadius: 50,
-        });
-        window.addEventListener("mousemove", (e) => {this.setPosition(e)} );
-        console.log("added");
-    }
-    removeEffect() {
-        this.setState({
-            percentRadius: 0,
-        });
-        window.removeEventListener("mousemove", (e) => {this.setPosition(e)} );
-        console.log("removed");
-    }
-
-    setPosition(e) {
-        var x = e.pageX-this.cardDiv.offsetLeft;
-        var y = e.pageY-this.cardDiv.offsetTop;
-        var widthX = this.cardDiv.offsetWidth;
-        var heightY = this.cardDiv.offsetHeight;
-
-        var percentX = Math.floor(x/widthX*100);
-        var percentY = Math.floor(y/heightY*100);
-
-        this.setState({
-            percentX: percentX,
-            percentY: percentY,
-        });
-
-        console.log("moved");
-    }
-
     render() {
         return(
         <div className={(this.props.flipped ? "flipped " : "") + "card"} onClick={() => {this.props.onClick(this.props.id)} }>
@@ -194,10 +125,7 @@ class Card extends React.Component {
                 <div className="card-cover"></div>
                 <div className="card-reveal">
                     <div className="card-bg" style={{backgroundImage: "url(" + this.props.img + ")"}}></div>
-
                 </div>
-            </div>
-            <div className={(this.state.show ? "opened " : "") + "card-desc"}>
             </div>
         </div>
         );
@@ -208,7 +136,8 @@ class CardContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            contents: null,
+            cardContent: null,
+            cardModal: null,
             showModal: false,
             currentModal: null,
             cardFlipState: [],
@@ -235,7 +164,7 @@ class CardContainer extends React.Component {
     }
 
     cardCheck(id) {
-        var {selection, contents} = this.state;
+        var {selection, cardContent, currentModal} = this.state;
         var index = selection.indexOf(id);
         if (index <= -1) { // If card has not been selected
             selection.push(id);
@@ -243,19 +172,18 @@ class CardContainer extends React.Component {
             selection.splice(index, 1);
         }
 
-        var maxCards = 3;
+        var maxCards = 2;
         if (selection.length >= 2) { // Atleast 2 cards selected
             var equal = true;
             var prev;
             for (var i = 0; i < selection.length; i++) {
-                var name = contents[selection[i]].name;
-                if (i == 0) {
+                var name = cardContent[selection[i]].name;
+                if (i === 0) {
                     prev = name;
                     continue;
                 }
-                if (name != prev) {
+                if (name !== prev) {
                     equal = false;
-                    console.log("breakie mcBreakFace");
                     break;
                 }
                 prev = name;
@@ -272,6 +200,7 @@ class CardContainer extends React.Component {
             } else {
                 if (selection.length >= maxCards) {
                     console.log("Bingo");
+                    currentModal = cardContent[selection[0]].name;
                     setTimeout(() => {
                         for (var i = 0; i < selection.length; i++) {
                             this.cardFlipDown(selection[i]);
@@ -285,11 +214,11 @@ class CardContainer extends React.Component {
 
         this.setState({
             selection: selection,
+            currentModal: currentModal,
         });
     }
 
     cardFlipToggle(id) {
-        console.log("toggle");
         var {cardFlipState} = this.state;
         cardFlipState[id] = !cardFlipState[id];
         this.setState({
@@ -298,7 +227,6 @@ class CardContainer extends React.Component {
     }
 
     cardFlipUp(id) {
-        console.log("up");
         var {cardFlipState} = this.state;
         cardFlipState[id] = true;
         this.setState({
@@ -307,7 +235,6 @@ class CardContainer extends React.Component {
     }
 
     cardFlipDown(id) {
-        console.log("down");
         var {cardFlipState} = this.state;
         cardFlipState[id] = false;
         this.setState({
@@ -328,19 +255,30 @@ class CardContainer extends React.Component {
 			if (req.readyState === 4) {
 				if (req.status === 200) {
 					var response = req.responseXML;
+                    var {cardContent, cardFlipState, cardModal} = this.state;
+
                     var cards = response.getElementsByTagName("Card");
-                    var contents = [];
-                    var cardFlipState = [];
-                    for (var id = 0; id < cards.length; id++) {
-                        contents[id] = {};
-                        var img = cards[id].getElementsByTagName("Img")[0].childNodes[0].nodeValue;
-                        contents[id].img = this.props.images[img];
-                        contents[id].name = cards[id].getElementsByTagName("Name")[0].childNodes[0].nodeValue;
-                        contents[id].header = cards[id].getElementsByTagName("Header")[0].childNodes[0].nodeValue;
-                        cardFlipState[id] = false;
+                    cardContent = [];
+                    for (var i = 0; i < cards.length; i++) {
+                        cardContent[i] = {};
+                        var img = cards[i].getElementsByTagName("Img")[0].childNodes[0].nodeValue;
+                        cardContent[i].img = this.props.images[img];
+                        cardContent[i].name = cards[i].getElementsByTagName("Name")[0].childNodes[0].nodeValue;
+                        cardContent[i].header = cards[i].getElementsByTagName("Header")[0].childNodes[0].nodeValue;
+                        cardFlipState[i] = false;
                     }
+
+                    var modals = response.getElementsByTagName("Modal");
+                    cardModal = [];
+                    for (var ii = 0; ii < modals.length; ii++) {
+                        var name = modals[ii].getElementsByTagName("Name")[0].childNodes[0].nodeValue;
+                        var content = modals[ii].getElementsByTagName("Content")[0].childNodes[1].data;
+                        cardModal[name] = content;
+                    }
+
                     this.setState({
-                        contents: contents,
+                        cardModal: cardModal,
+                        cardContent: cardContent,
                         cardFlipState: cardFlipState,
                     });
 				}
@@ -351,28 +289,38 @@ class CardContainer extends React.Component {
     }
 
     render() {
-        var allCards = [];
-        var cards = [];
-        var {contents, cardFlipState} = this.state;
-        if (contents && cardFlipState) {
-            for (var i = 0; i < contents.length; i++) {
-                allCards.push(
+        var cardsRender = [];
+        var {cardContent, cardFlipState, showModal, cardModal, currentModal} = this.state;
+        if (cardContent && cardFlipState) {
+            for (var i = 0; i < cardContent.length; i++) {
+                cardsRender.push(
                     <Card
                         key={i}
                         id={i}
-                        name={contents[i].name}
-                        img={[contents[i].img]}
-                        header={contents[i].header}
+                        name={cardContent[i].name}
+                        img={[cardContent[i].img]}
+                        header={cardContent[i].header}
                         onClick={(id) => {this.cardClick(id)}}
                         flipped={cardFlipState[i]}
                     />
                 );
             }
         }
+        var modalRender;
+        if (showModal && currentModal && cardModal) {
+            modalRender = cardModal[currentModal];
+        }
 
         return (
-            <div className="card-container">
-                {allCards}
+            <div>
+                <div className="card-container">
+                    {cardsRender}
+                </div>
+                {showModal &&
+                    <div className="card-modal">
+                        {modalRender}
+                    </div>
+                }
             </div>
         );
     }
@@ -390,7 +338,7 @@ export default class Portfolio extends Component {
 
     importAll(r) {
         var images = {};
-        r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
+        r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); return true; });
         return images;
     }
 

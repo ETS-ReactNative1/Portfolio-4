@@ -24,16 +24,18 @@
         flex-wrap: wrap;
         justify-content: center;
     }
-    .modal {
+    .card-modal {
         z-index: 160;
         position: fixed;
         top: 60px;
         bottom: 60px;
-        left: 20%;
-        right: 20%;
+        left: 10%;
+        right: 10%;
         padding: 20px;
         background-color: #fafafa;
         color: rgb(20, 20, 20);
+        border-radius: 4px;
+        box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.6);
     }
 
     .card {
