@@ -142,6 +142,7 @@ class CardContainer extends React.Component {
             currentModal: null,
             cardFlipState: [],
             selection: [],
+            test: [],
         };
 
         this.getData = this.getData.bind(this);
@@ -164,7 +165,7 @@ class CardContainer extends React.Component {
     }
 
     cardCheck(id) {
-        var {selection, cardContent, currentModal} = this.state;
+        var {selection, cardContent} = this.state;
         var index = selection.indexOf(id);
         if (index <= -1) { // If card has not been selected
             selection.push(id);
@@ -200,7 +201,7 @@ class CardContainer extends React.Component {
             } else {
                 if (selection.length >= maxCards) {
                     console.log("Bingo");
-                    currentModal = cardContent[selection[0]].name;
+                    this.showModal(cardContent[selection[0]].name);
                     setTimeout(() => {
                         for (var i = 0; i < selection.length; i++) {
                             this.cardFlipDown(selection[i]);
@@ -214,7 +215,6 @@ class CardContainer extends React.Component {
 
         this.setState({
             selection: selection,
-            currentModal: currentModal,
         });
     }
 
@@ -242,10 +242,10 @@ class CardContainer extends React.Component {
         });
     }
 
-    showModal(id) {
+    showModal(name) {
         this.setState({
             showModal: true,
-            currentModal: id,
+            currentModal: name,
         });
     }
 
@@ -272,7 +272,7 @@ class CardContainer extends React.Component {
                     cardModal = [];
                     for (var ii = 0; ii < modals.length; ii++) {
                         var name = modals[ii].getElementsByTagName("Name")[0].childNodes[0].nodeValue;
-                        var content = modals[ii].getElementsByTagName("Content")[0].childNodes[1].data;
+                        var content = modals[ii].getElementsByTagName("Content")[0].children;
                         cardModal[name] = content;
                     }
 
@@ -289,9 +289,10 @@ class CardContainer extends React.Component {
     }
 
     render() {
-        var cardsRender = [];
         var {cardContent, cardFlipState, showModal, cardModal, currentModal} = this.state;
+
         if (cardContent && cardFlipState) {
+            var cardsRender = [];
             for (var i = 0; i < cardContent.length; i++) {
                 cardsRender.push(
                     <Card
@@ -306,9 +307,20 @@ class CardContainer extends React.Component {
                 );
             }
         }
-        var modalRender;
+
         if (showModal && currentModal && cardModal) {
-            modalRender = cardModal[currentModal];
+        }
+
+        if (cardModal) {
+            var modalRender = [];
+            var htmlCollection = cardModal["quads"];
+            for (var i = 0; i < htmlCollection.length; i++) {
+                    var NodeName = htmlCollection[i].nodeName; // Capitalized first letter here makes a difference !
+                    var nodeContent = htmlCollection[i].textContent;
+                    var el = <NodeName key={i}>{nodeContent}</NodeName>;
+                    modalRender.push(el);
+            }
+            console.log(modalRender);
         }
 
         return (
@@ -316,7 +328,7 @@ class CardContainer extends React.Component {
                 <div className="card-container">
                     {cardsRender}
                 </div>
-                {showModal &&
+                {true &&
                     <div className="card-modal">
                         {modalRender}
                     </div>
