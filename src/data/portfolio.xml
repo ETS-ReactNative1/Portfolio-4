@@ -3,76 +3,74 @@
         <Modal>
             <Name>quads</Name>
             <Content>
-                <h1>QuaDs - A Musical Tap Game</h1>
-                <p>QuaDs was my first game that's ever released. I started working on it in my last year of highschool and finished one year later, the game was then released to Google Play at the start of 2017.</p>
-                <p>The engine used was GameMaker Studio, it uses GML (GameMaker Language) which is very similar to Javascript. All in-game assets were made by me. The most challenging part however was the sound, where I had to slice songs into notes, which then plays as the player taps in the game.</p>
+                <Logo>quads-logo.png</Logo>
+                <Title>QuaDs</Title>
+                <Remark>
+                    <Content>The game is so hard! And the background is STILL not bright enough.</Content>
+                    <Author>Pham Quang Huy, 2016</Author>
+                </Remark>
+                <Demo>https://play.google.com/store/apps/details?id=com.avoclab.QuaDs</Demo>
+                <Desc>
+                    <![CDATA[
+                    <p>QuaDs was my first game that's ever released. It has a colorful and musical gameplay that was (still is) trendy amongst mobile games. I started working on QuaDs in my last year of highschool and finished one year later, the game was then released to Google Play in January, 2017.</p>
+                    <p>The engine used was GameMaker Studio, it uses GML (GameMaker Language) which is very similar to Javascript. All in-game assets were made by me. The most challenging part however was the sound, where I had to slice songs into notes, which then plays as the player taps in the game.</p>
+                    <p>Another obstable was exposure, setting up a budget to spend on advertising was not cost-effective. Fortunately, a post I made about the game on social media site 9gag.com gained some popularity and this accounted for nearly all the downloads of my game.</p>
+                    ]]>
+                </Desc>
             </Content>
         </Modal>
     </Modals>
     <Cards>
         <Card>
             <Name>quads</Name>
-            <Header>QuaDs</Header>
             <Img>quads.png</Img>
         </Card>
         <Card>
             <Name>quads</Name>
-            <Header>QuaDs</Header>
             <Img>quads.png</Img>
         </Card>
         <Card>
             <Name>madcube</Name>
-            <Header>MadCube</Header>
             <Img>madcube.png</Img>
         </Card>
         <Card>
             <Name>quads</Name>
-            <Header>QuaDs</Header>
             <Img>quads.png</Img>
         </Card>
         <Card>
             <Name>madcube</Name>
-            <Header>MadCube</Header>
             <Img>madcube.png</Img>
         </Card>
         <Card>
             <Name>madcube</Name>
-            <Header>MadCube</Header>
             <Img>madcube.png</Img>
         </Card>
         <Card>
             <Name>madcube</Name>
-            <Header>MadCube</Header>
             <Img>madcube.png</Img>
         </Card>
         <Card>
             <Name>madcube</Name>
-            <Header>MadCube</Header>
             <Img>madcube.png</Img>
         </Card>
         <Card>
             <Name>madcube</Name>
-            <Header>MadCube</Header>
             <Img>madcube.png</Img>
         </Card>
         <Card>
             <Name>madcube</Name>
-            <Header>MadCube</Header>
             <Img>madcube.png</Img>
         </Card>
         <Card>
             <Name>madcube</Name>
-            <Header>MadCube</Header>
             <Img>madcube.png</Img>
         </Card>
         <Card>
             <Name>madcube</Name>
-            <Header>MadCube</Header>
             <Img>madcube.png</Img>
         </Card>
         <Card>
             <Name>madcube</Name>
-            <Header>MadCube</Header>
             <Img>madcube.png</Img>
         </Card>
     </Cards>

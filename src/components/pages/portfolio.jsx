@@ -117,21 +117,6 @@ class Clock extends Component {
     }
 }
 
-class Card extends React.Component {
-    render() {
-        return(
-        <div className={(this.props.flipped ? "flipped " : "") + "card"} onClick={() => {this.props.onClick(this.props.id)} }>
-            <div>
-                <div className="card-cover"></div>
-                <div className="card-reveal">
-                    <div className="card-bg" style={{backgroundImage: "url(" + this.props.img + ")"}}></div>
-                </div>
-            </div>
-        </div>
-        );
-    }
-}
-
 class CardContainer extends React.Component {
     constructor(props) {
         super(props);
@@ -142,7 +127,6 @@ class CardContainer extends React.Component {
             currentModal: null,
             cardFlipState: [],
             selection: [],
-            test: [],
         };
 
         this.getData = this.getData.bind(this);
@@ -151,7 +135,6 @@ class CardContainer extends React.Component {
         this.cardFlipUp = this.cardFlipUp.bind(this);
         this.cardFlipDown = this.cardFlipDown.bind(this);
         this.cardFlipToggle = this.cardFlipToggle.bind(this);
-        // this.cardSelect = this.cardSelect.bind(this);
         this.cardCheck = this.cardCheck.bind(this);
     }
 
@@ -210,7 +193,6 @@ class CardContainer extends React.Component {
                     }, timeout);
                 }
             }
-
         }
 
         this.setState({
@@ -264,16 +246,31 @@ class CardContainer extends React.Component {
                         var img = cards[i].getElementsByTagName("Img")[0].childNodes[0].nodeValue;
                         cardContent[i].img = this.props.images[img];
                         cardContent[i].name = cards[i].getElementsByTagName("Name")[0].childNodes[0].nodeValue;
-                        cardContent[i].header = cards[i].getElementsByTagName("Header")[0].childNodes[0].nodeValue;
                         cardFlipState[i] = false;
                     }
 
                     var modals = response.getElementsByTagName("Modal");
                     cardModal = [];
-                    for (var ii = 0; ii < modals.length; ii++) {
-                        var name = modals[ii].getElementsByTagName("Name")[0].childNodes[0].nodeValue;
-                        var content = modals[ii].getElementsByTagName("Content")[0].children;
-                        cardModal[name] = content;
+                    for (var i = 0; i < modals.length; i++) {
+                        var name = modals[i].getElementsByTagName("Name")[0].childNodes[0].nodeValue;
+                        cardModal[name] = {};
+
+                        var logo = modals[i].getElementsByTagName("Logo")[0].childNodes[0].nodeValue;
+                        cardModal[name].logo = this.props.images[logo];
+
+                        cardModal[name].title = modals[i].getElementsByTagName("Title")[0].childNodes[0].nodeValue;
+                        cardModal[name].demo = modals[i].getElementsByTagName("Demo")[0].childNodes[0].nodeValue;
+
+                        var remark = modals[i].getElementsByTagName("Remark")[0];
+                        cardModal[name].remarkContent = remark.getElementsByTagName("Content")[0].childNodes[0].nodeValue;
+                        cardModal[name].remarkAuthor = remark.getElementsByTagName("Author")[0].childNodes[0].nodeValue;
+
+                        var descNodes = modals[i].getElementsByTagName("Desc")[0].childNodes;
+                        for (var n = 0; n < descNodes.length; n++) {
+                            if (descNodes[n].nodeName === "#cdata-section") {
+                                cardModal[name].desc = descNodes[n].data;
+                            }
+                        }
                     }
 
                     this.setState({
@@ -312,15 +309,16 @@ class CardContainer extends React.Component {
         }
 
         if (cardModal) {
-            var modalRender = [];
-            var htmlCollection = cardModal["quads"];
-            for (var i = 0; i < htmlCollection.length; i++) {
-                    var NodeName = htmlCollection[i].nodeName; // Capitalized first letter here makes a difference !
-                    var nodeContent = htmlCollection[i].textContent;
-                    var el = <NodeName key={i}>{nodeContent}</NodeName>;
-                    modalRender.push(el);
-            }
-            console.log(modalRender);
+            var modalRender = (
+                <Modal
+                    logo={cardModal["quads"].logo}
+                    title={cardModal["quads"].title}
+                    demo={cardModal["quads"].demo}
+                    remarkAuthor={cardModal["quads"].remarkAuthor}
+                    remarkContent={cardModal["quads"].remarkContent}
+                    desc={cardModal["quads"].desc}
+                />
+            );
         }
 
         return (
@@ -329,11 +327,70 @@ class CardContainer extends React.Component {
                     {cardsRender}
                 </div>
                 {true &&
-                    <div className="card-modal">
-                        {modalRender}
-                    </div>
+                    modalRender
                 }
             </div>
+        );
+    }
+}
+
+class Modal extends React.Component {
+    constructor(props) {
+        super(props);
+        this.removeScriptTag = this.removeScriptTag.bind(this);
+    }
+
+    removeScriptTag(string) {
+        var div = document.createElement('div');
+        div.innerHTML = string;
+        var scripts = div.getElementsByTagName('script');
+        var i = scripts.length;
+        while (i--) {
+            scripts[i].parentNode.removeChild(scripts[i]);
+        }
+        return String(div.innerHTML);
+    }
+
+    render() {
+        var desc = this.removeScriptTag(this.props.desc);
+        var descHTML = {__html: desc};
+
+        return(
+            <div className="modal-container">
+                <div className="row">
+                    <div className="logo col-4">
+                        <img src={this.props.logo} />
+                    </div>
+                    <div className="title col-8">
+                        <h1>{this.props.title}</h1>
+                        <p className="remark">
+                            {this.props.remarkContent}
+                            <span className="author">{this.props.remarkAuthor}</span>
+                        </p>
+                        <a target="_blank" rel="noopener noreferrer" href={this.props.demo}>View the demo</a>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="desc col-12" dangerouslySetInnerHTML={descHTML}>
+
+                    </div>
+                </div>
+            </div>
+        );
+    }
+}
+
+class Card extends React.Component {
+    render() {
+        return(
+        <div className={(this.props.flipped ? "flipped " : "") + "card"} onClick={() => {this.props.onClick(this.props.id)} }>
+            <div>
+                <div className="card-cover"></div>
+                <div className="card-reveal">
+                    <div className="card-bg" style={{backgroundImage: "url(" + this.props.img + ")"}}></div>
+                </div>
+            </div>
+        </div>
         );
     }
 }
