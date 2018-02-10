@@ -41,8 +41,8 @@
 
         h1 {
             font-weight: 500;
-            margin-top: 16px;
-            margin-bottom: 0;
+            margin-top: 0px;
+            margin-bottom: 0px;
         }
 
         .logo {
@@ -51,17 +51,29 @@
             }
         }
 
+        .remark-container {
+            margin: 4px 0;
+            margin-bottom: 10px;
+            padding: 8px 0;
+            max-height: 12vw;
+            border-radius: 4px;
+            box-shadow: inset -2px 0px 16px 0px rgba(0, 0, 0, 0.3);
+            overflow-y: auto;
+            overflow-x: visible;
+        }
+
         .remark {
-            margin: 24px 0;
+            margin: 10px 0;
             padding: 4px 0px;
             padding-left: 16px;
-            box-shadow: inset 4px 0px 0px 0px #2196F3;
+            box-shadow: inset 4px 0px 0px 0px rgba(33, 150, 244, 0.7);
             font-style: italic;
             font-size: 17px;
             color: rgba(75, 75, 90, 1);
 
             .author {
                 color: rgba(75, 75, 90, 0.6);
+                white-space: nowrap;
 
                 &:before {
                     content: ' – ';

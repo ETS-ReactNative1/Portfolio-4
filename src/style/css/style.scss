@@ -1,3 +1,5 @@
+// Global style
+
 html, body {
     margin: 0;
     padding: 0;
@@ -17,10 +19,15 @@ body {
     box-sizing: border-box;
 }
 
-.header {
-    background-color: green;
-}
-
 br {
     font-size: 10px;
+}
+
+a, a:visited {
+    text-decoration: none;
+    color: #0000EE;
+
+    &:hover {
+        text-decoration: underline;
+    }
 }

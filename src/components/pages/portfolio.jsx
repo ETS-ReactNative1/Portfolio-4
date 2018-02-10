@@ -255,20 +255,29 @@ class CardContainer extends React.Component {
                         var name = modals[i].getElementsByTagName("Name")[0].childNodes[0].nodeValue;
                         cardModal[name] = {};
 
-                        var logo = modals[i].getElementsByTagName("Logo")[0].childNodes[0].nodeValue;
-                        cardModal[name].logo = this.props.images[logo];
-
                         cardModal[name].title = modals[i].getElementsByTagName("Title")[0].childNodes[0].nodeValue;
                         cardModal[name].demo = modals[i].getElementsByTagName("Demo")[0].childNodes[0].nodeValue;
 
-                        var remark = modals[i].getElementsByTagName("Remark")[0];
-                        cardModal[name].remarkContent = remark.getElementsByTagName("Content")[0].childNodes[0].nodeValue;
-                        cardModal[name].remarkAuthor = remark.getElementsByTagName("Author")[0].childNodes[0].nodeValue;
+                        // var screenshots = modals[i].getElementsByTagName("Logo")[0].childNodes[0].nodeValue
+
+                        var logo = modals[i].getElementsByTagName("Logo")[0].childNodes[0].nodeValue;
+                        cardModal[name].logo = this.props.images[logo];
+
+                        var remarkNodes = modals[i].getElementsByTagName("Remark");
+                        cardModal[name].remarks = [];
+                        for (var r = 0; r < remarkNodes.length; r++) {
+                            cardModal[name].remarks[r] = {};
+
+                            var remarkContent = remarkNodes[r].getElementsByTagName("Content")[0].childNodes[0].nodeValue;
+                            var remarkAuthor = remarkNodes[r].getElementsByTagName("Author")[0].childNodes[0].nodeValue;
+                            cardModal[name].remarks[r].content = remarkContent;
+                            cardModal[name].remarks[r].author = remarkAuthor;
+                        }
 
                         var descNodes = modals[i].getElementsByTagName("Desc")[0].childNodes;
-                        for (var n = 0; n < descNodes.length; n++) {
-                            if (descNodes[n].nodeName === "#cdata-section") {
-                                cardModal[name].desc = descNodes[n].data;
+                        for (var d = 0; d < descNodes.length; d++) {
+                            if (descNodes[d].nodeName === "#cdata-section") {
+                                cardModal[name].desc = descNodes[d].data;
                             }
                         }
                     }
@@ -314,8 +323,7 @@ class CardContainer extends React.Component {
                     logo={cardModal["quads"].logo}
                     title={cardModal["quads"].title}
                     demo={cardModal["quads"].demo}
-                    remarkAuthor={cardModal["quads"].remarkAuthor}
-                    remarkContent={cardModal["quads"].remarkContent}
+                    remarks={cardModal["quads"].remarks}
                     desc={cardModal["quads"].desc}
                 />
             );
@@ -355,6 +363,18 @@ class Modal extends React.Component {
         var desc = this.removeScriptTag(this.props.desc);
         var descHTML = {__html: desc};
 
+        var {remarks} = this.props;
+        if (remarks) {
+            var remarksRender = remarks.map((remark, index) => {
+                return(
+                    <p className="remark" key={index}>
+                        {remark.content}
+                        <span className="author">{remark.author}</span>
+                    </p>
+                );
+            });
+        }
+
         return(
             <div className="modal-container">
                 <div className="row">
@@ -363,11 +383,15 @@ class Modal extends React.Component {
                     </div>
                     <div className="title col-8">
                         <h1>{this.props.title}</h1>
-                        <p className="remark">
-                            {this.props.remarkContent}
-                            <span className="author">{this.props.remarkAuthor}</span>
-                        </p>
+                        <div className="remark-container">
+                            {remarksRender}
+                        </div>
                         <a target="_blank" rel="noopener noreferrer" href={this.props.demo}>View the demo</a>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="screenshots col-12">
+                        <ImageScroll />
                     </div>
                 </div>
                 <div className="row">
@@ -375,6 +399,18 @@ class Modal extends React.Component {
 
                     </div>
                 </div>
+            </div>
+        );
+    }
+}
+
+class ImageScroll extends React.Component {
+    render() {
+        // var {images} = this.props;
+
+        return(
+            <div className="image-scroll">
+                Screenshots here
             </div>
         );
     }
@@ -402,9 +438,6 @@ export default class Portfolio extends Component {
         this.importAll = this.importAll.bind(this);
     }
 
-    componentDidMount() {
-    }
-
     importAll(r) {
         var images = {};
         r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); return true; });
@@ -412,7 +445,8 @@ export default class Portfolio extends Component {
     }
 
     render() {
-        var images = this.importAll(require.context('img/portfolio', false, /\.(png|jpe?g|svg)$/));
+        // var images = this.importAll(require.context('img/portfolio', false, /\.(png|jpe?g|svg)$/));
+        var images = this.importAll(require.context('img/portfolio/quads', false, /\.(png|jpe?g|svg)$/));
         return (
             <div className="portfolio">
                 <div className="intro">

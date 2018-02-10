@@ -4,17 +4,28 @@
             <Name>quads</Name>
             <Content>
                 <Logo>quads-logo.png</Logo>
+                <Screenshots>quads-ss</Screenshots>
                 <Title>QuaDs</Title>
-                <Remark>
-                    <Content>The game is so hard! And the background is STILL not bright enough.</Content>
-                    <Author>Pham Quang Huy, 2016</Author>
-                </Remark>
+                <Remarks>
+                    <Remark>
+                        <Content>The game is so hard! And the background is STILL not bright enough.</Content>
+                        <Author>Pham Quang Huy, 2016.</Author>
+                    </Remark>
+                    <Remark>
+                        <Content>Your sister loves the game !</Content>
+                        <Author>My mom, 2017.</Author>
+                    </Remark>
+                    <Remark>
+                        <Content>Put it on Reddit, you will get more downloads.</Content>
+                        <Author>My brother, 2017.</Author>
+                    </Remark>
+                </Remarks>
                 <Demo>https://play.google.com/store/apps/details?id=com.avoclab.QuaDs</Demo>
                 <Desc>
                     <![CDATA[
                     <p>QuaDs was my first game that's ever released. It has a colorful and musical gameplay that was (still is) trendy amongst mobile games. I started working on QuaDs in my last year of highschool and finished one year later, the game was then released to Google Play in January, 2017.</p>
                     <p>The engine used was GameMaker Studio, it uses GML (GameMaker Language) which is very similar to Javascript. All in-game assets were made by me. The most challenging part however was the sound, where I had to slice songs into notes, which then plays as the player taps in the game.</p>
-                    <p>Another obstable was exposure, setting up a budget to spend on advertising was not cost-effective. Fortunately, a post I made about the game on social media site 9gag.com gained some popularity and this accounted for nearly all the downloads of my game.</p>
+                    <p>Another obstable was exposure, setting up a budget to spend on advertising was nowhere near cost-effective. Fortunately, a post I made about the game on social media site 9gag.com gained some popularity and this drove nearly all the downloads for my game.</p>
                     ]]>
                 </Desc>
             </Content>
