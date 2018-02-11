@@ -3,8 +3,14 @@
         <Modal>
             <Name>quads</Name>
             <Content>
-                <Logo>quads-logo.png</Logo>
-                <Screenshots>quads-ss</Screenshots>
+                <Logo>quads/quads-logo.png</Logo>
+                <Screenshots>
+                    <Screenshot>quads/screenshots/1.png</Screenshot>
+                    <Screenshot>quads/screenshots/2.png</Screenshot>
+                    <Screenshot>quads/screenshots/3.png</Screenshot>
+                    <Screenshot>quads/screenshots/4.png</Screenshot>
+                    <Screenshot>quads/screenshots/5.png</Screenshot>
+                </Screenshots>
                 <Title>QuaDs</Title>
                 <Remarks>
                     <Remark>
@@ -34,55 +40,47 @@
     <Cards>
         <Card>
             <Name>quads</Name>
-            <Img>quads.png</Img>
+            <Img>quads/quads.png</Img>
         </Card>
         <Card>
             <Name>quads</Name>
-            <Img>quads.png</Img>
+            <Img>quads/quads.png</Img>
         </Card>
         <Card>
             <Name>madcube</Name>
-            <Img>madcube.png</Img>
+            <Img>madcube/madcube.png</Img>
+        </Card>
+        <Card>
+            <Name>madcube</Name>
+            <Img>madcube/madcube.png</Img>
         </Card>
         <Card>
             <Name>quads</Name>
-            <Img>quads.png</Img>
+            <Img>quads/quads.png</Img>
+        </Card>
+        <Card>
+            <Name>quads</Name>
+            <Img>quads/quads.png</Img>
         </Card>
         <Card>
             <Name>madcube</Name>
-            <Img>madcube.png</Img>
+            <Img>madcube/madcube.png</Img>
         </Card>
         <Card>
             <Name>madcube</Name>
-            <Img>madcube.png</Img>
+            <Img>madcube/madcube.png</Img>
         </Card>
         <Card>
             <Name>madcube</Name>
-            <Img>madcube.png</Img>
+            <Img>madcube/madcube.png</Img>
         </Card>
         <Card>
             <Name>madcube</Name>
-            <Img>madcube.png</Img>
+            <Img>madcube/madcube.png</Img>
         </Card>
         <Card>
             <Name>madcube</Name>
-            <Img>madcube.png</Img>
-        </Card>
-        <Card>
-            <Name>madcube</Name>
-            <Img>madcube.png</Img>
-        </Card>
-        <Card>
-            <Name>madcube</Name>
-            <Img>madcube.png</Img>
-        </Card>
-        <Card>
-            <Name>madcube</Name>
-            <Img>madcube.png</Img>
-        </Card>
-        <Card>
-            <Name>madcube</Name>
-            <Img>madcube.png</Img>
+            <Img>madcube/madcube.png</Img>
         </Card>
     </Cards>
 </Portfolio>

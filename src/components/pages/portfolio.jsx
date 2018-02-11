@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {importAllFrom} from 'components/utils/importer';
 
 import cardData from 'data/portfolio.xml';
 
@@ -238,13 +239,14 @@ class CardContainer extends React.Component {
 				if (req.status === 200) {
 					var response = req.responseXML;
                     var {cardContent, cardFlipState, cardModal} = this.state;
+                    var images = importAllFrom(require.context("img/portfolio", true, /\.(png|jpe?g|svg)$/));
 
                     var cards = response.getElementsByTagName("Card");
                     cardContent = [];
                     for (var i = 0; i < cards.length; i++) {
                         cardContent[i] = {};
                         var img = cards[i].getElementsByTagName("Img")[0].childNodes[0].nodeValue;
-                        cardContent[i].img = this.props.images[img];
+                        cardContent[i].img = images[img];
                         cardContent[i].name = cards[i].getElementsByTagName("Name")[0].childNodes[0].nodeValue;
                         cardFlipState[i] = false;
                     }
@@ -258,16 +260,21 @@ class CardContainer extends React.Component {
                         cardModal[name].title = modals[i].getElementsByTagName("Title")[0].childNodes[0].nodeValue;
                         cardModal[name].demo = modals[i].getElementsByTagName("Demo")[0].childNodes[0].nodeValue;
 
-                        // var screenshots = modals[i].getElementsByTagName("Logo")[0].childNodes[0].nodeValue
-
                         var logo = modals[i].getElementsByTagName("Logo")[0].childNodes[0].nodeValue;
-                        cardModal[name].logo = this.props.images[logo];
+                        cardModal[name].logo = images[logo];
+
+                        var screenshotsNodes = modals[i].getElementsByTagName("Screenshot");
+                        cardModal[name].screenshots = [];
+                        for (var r = 0; r < screenshotsNodes.length; r++) {
+                            cardModal[name].screenshots[r] = [];
+                            var screenshot = screenshotsNodes[r].childNodes[i].nodeValue;
+                            cardModal[name].screenshots[r] = images[screenshot];
+                        }
 
                         var remarkNodes = modals[i].getElementsByTagName("Remark");
                         cardModal[name].remarks = [];
                         for (var r = 0; r < remarkNodes.length; r++) {
                             cardModal[name].remarks[r] = {};
-
                             var remarkContent = remarkNodes[r].getElementsByTagName("Content")[0].childNodes[0].nodeValue;
                             var remarkAuthor = remarkNodes[r].getElementsByTagName("Author")[0].childNodes[0].nodeValue;
                             cardModal[name].remarks[r].content = remarkContent;
@@ -325,6 +332,7 @@ class CardContainer extends React.Component {
                     demo={cardModal["quads"].demo}
                     remarks={cardModal["quads"].remarks}
                     desc={cardModal["quads"].desc}
+                    screenshots={cardModal["quads"].screenshots}
                 />
             );
         }
@@ -363,7 +371,7 @@ class Modal extends React.Component {
         var desc = this.removeScriptTag(this.props.desc);
         var descHTML = {__html: desc};
 
-        var {remarks} = this.props;
+        var {remarks, screenshots} = this.props;
         if (remarks) {
             var remarksRender = remarks.map((remark, index) => {
                 return(
@@ -377,11 +385,11 @@ class Modal extends React.Component {
 
         return(
             <div className="modal-container">
-                <div className="row">
-                    <div className="logo col-4">
+                <div className="row summary">
+                    <div className="col-4">
                         <img src={this.props.logo} />
                     </div>
-                    <div className="title col-8">
+                    <div className="col-8">
                         <h1>{this.props.title}</h1>
                         <div className="remark-container">
                             {remarksRender}
@@ -391,7 +399,8 @@ class Modal extends React.Component {
                 </div>
                 <div className="row">
                     <div className="screenshots col-12">
-                        <ImageScroll />
+                        <p>Digitally recorded images of display apparatus (or just "Screenshots"):</p>
+                        <ImageScroll images={screenshots}/>
                     </div>
                 </div>
                 <div className="row">
@@ -405,12 +414,29 @@ class Modal extends React.Component {
 }
 
 class ImageScroll extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+
+        };
+    }
+
     render() {
-        // var {images} = this.props;
+        var {images} = this.props;
+
+        if (images) {
+            var previewRender = images.map((image, index) => {
+                return(
+                    <img className="thumbnail" src={image} key={image} />
+                );
+            });
+        }
 
         return(
             <div className="image-scroll">
-                Screenshots here
+                <div className="thumbnail-container">
+                    {previewRender}
+                </div>
             </div>
         );
     }
@@ -433,20 +459,7 @@ class Card extends React.Component {
 
 export default class Portfolio extends Component {
 
-    constructor(props) {
-        super(props);
-        this.importAll = this.importAll.bind(this);
-    }
-
-    importAll(r) {
-        var images = {};
-        r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); return true; });
-        return images;
-    }
-
     render() {
-        // var images = this.importAll(require.context('img/portfolio', false, /\.(png|jpe?g|svg)$/));
-        var images = this.importAll(require.context('img/portfolio/quads', false, /\.(png|jpe?g|svg)$/));
         return (
             <div className="portfolio">
                 <div className="intro">
@@ -462,7 +475,7 @@ export default class Portfolio extends Component {
                     <div className="row">
                         <div className="col-12">
                             <div className="card-center">
-                                <CardContainer images={images}/>
+                                <CardContainer />
                             </div>
                         </div>
                     </div>
