@@ -406,12 +406,18 @@ class Modal extends React.Component {
                     </div>
                 </div>
                 <div className="row desc">
-                    <div className="desc col-12" dangerouslySetInnerHTML={descHTML}>
+                    <div className="col-12" dangerouslySetInnerHTML={descHTML}>
 
                     </div>
                 </div>
-                <div className="remark-container">
-                    {remarksRender}
+                <hr></hr>
+                <div className="row rmrks">
+                    <div className="col-12">
+                        <div className="remark-container">
+                            <p><b>Expert opinions:</b></p>
+                            {remarksRender}
+                        </div>
+                    </div>
                 </div>
             </div>
         );
@@ -422,7 +428,7 @@ class ImageScroll extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            showFull: true,
+            showFull: false,
             currentImage: 0,
         };
         this.openFull = this.openFull.bind(this);
