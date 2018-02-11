@@ -12,6 +12,8 @@
                     <Screenshot>quads/screenshots/5.png</Screenshot>
                 </Screenshots>
                 <Title>QuaDs</Title>
+                <Time>January 16, 2017</Time>
+                <Type>Mobile game</Type>
                 <Remarks>
                     <Remark>
                         <Content>The game is so hard! And the background is STILL not bright enough.</Content>
@@ -24,6 +26,10 @@
                     <Remark>
                         <Content>Put it on Reddit, you will get more downloads.</Content>
                         <Author>My brother, 2017.</Author>
+                    </Remark>
+                    <Remark>
+                        <Content>Really made me doubt my multi-tasking ability.</Content>
+                        <Author>A random player, 2017.</Author>
                     </Remark>
                 </Remarks>
                 <Demo>https://play.google.com/store/apps/details?id=com.avoclab.QuaDs</Demo>

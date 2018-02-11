@@ -25,21 +25,129 @@
         justify-content: center;
     }
     .image-scroll {
-        .thumbnail-container {
-            position: relative;
-            height: 22vw;
-            min-height: 200px;
+        .image-container {
+            height: 300px;
             padding: 10px 0;
             white-space: nowrap;
             overflow-y: hidden;
             overflow-x: auto;
             text-align: center;
+            position: relative;
 
-            img {
-                display: inline-block;
-                object-fit: contain;
+            &.expanded {
+                height: 520px;
+            }
+
+            .thumbnails {
                 height: 100%;
-                margin: 0 6px;
+
+                img {
+                    display: inline-block;
+                    height: 100%;
+                    margin: 0px 4px;
+                }
+            }
+
+            .full {
+                height: 100%;
+                position: relative;
+
+                img {
+                    display: inline-block;
+                    height: 100%;
+                    max-width: 100%;
+                    margin: 0px 4px;
+                }
+
+                .animate {
+                    height: 100%;
+                    margin: auto;
+
+                    .current, .prev, .next {
+                        position: absolute;
+                        left: 0;
+                        right: 0;
+                        margin: auto;
+                        opacity: 1;
+                        z-index: 1;
+                        transition: transform 0.4s ease-out;
+                    }
+                    .prev, .next {
+                        z-index: -1;
+                        opacity: 0;
+                        pointer-events: none;
+                    }
+                    .prev {
+                        transform: translateX(-200px);
+                    }
+                    .next {
+                        transform: translateX(200px);
+                    }
+                }
+
+                .button {
+                    user-select: none;
+                    position: absolute;
+                    border-radius: 4px;
+                    width: 60px;
+                    cursor: pointer;
+                    transition: box-shadow 0.2s ease;
+
+                    svg {
+                        position: absolute;
+                        left: 0;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        width: 60px;
+
+                        polyline {
+                            fill: none;
+                            stroke: rgba(50, 50, 50, 1);
+                            stroke-width: 6px;
+                            stroke-linecap: round;
+                            transition: stroke 0.2s ease;
+                        }
+                    }
+
+                    &:hover {
+                        box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.4);
+
+                        svg polyline {
+                            stroke: rgba(0, 0, 0, 1);
+                        }
+                    }
+                    &.close {
+                        top: 5px;
+                        right: 5px;
+                        color: #000;
+
+                        .material-icons {
+                            display: block;
+                            width: 60px;
+                            height: 60px;
+                            line-height: 60px;
+                            font-size: 50px;
+                            vertical-align: middle;
+                            text-align: center;
+                        }
+                    }
+
+                    &.prev, &.next {
+                        height: 65%;
+                        top: 50%;
+                        transform: translateY(-50%);
+                    }
+                    &.prev {
+                        left: 5px;
+                    }
+                    &.next {
+                        right: 5px;
+
+                        svg {
+                            transform: translateY(-50%) rotate(180deg);
+                        }
+                    }
+                }
             }
         }
     }
@@ -60,28 +168,53 @@
         // display: none;
 
         .summary {
+            position: relative;
 
             h1 {
                 font-weight: 500;
                 margin-top: 0px;
                 margin-bottom: 0px;
             }
+            .details {
+                margin-top: 5px;
+                margin-bottom: 10px;
+                font-size: 16px;
+                color: #333;
 
-            img {
-                width: 100%;
+                .type:before {
+                    content: " • ";
+                }
+            }
+
+            .demo {
+                position: absolute;
+                bottom: 16px;
+                right: 15px;
+                border-radius: 2px;
+                display: inline-block;
+                color: #fff;
+                font-size: 17px;
+                padding: 0.7em 0.9em;
+                text-transform: uppercase;
+                background-color: rgba(33, 150, 244, 1);
+                text-decoration: none;
+                transition: background-color 0.2s ease;
+
+                &:hover {
+                    background-color: rgba(20, 125, 209, 1);
+                }
+            }
+
+            .logo {
+                position: relative;
+
+                img {
+                    width: 100%;
+                }
             }
 
             .remark-container {
                 margin: 4px 0;
-                margin-bottom: 10px;
-                max-height: 16vw;
-                border-radius: 4px;
-                overflow-y: auto;
-                overflow-x: visible;
-
-                @media only screen and (max-width: 1000px) {
-                    max-height: 12vw;
-                }
             }
 
             .remark {

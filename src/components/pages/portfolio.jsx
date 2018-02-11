@@ -259,6 +259,8 @@ class CardContainer extends React.Component {
 
                         cardModal[name].title = modals[i].getElementsByTagName("Title")[0].childNodes[0].nodeValue;
                         cardModal[name].demo = modals[i].getElementsByTagName("Demo")[0].childNodes[0].nodeValue;
+                        cardModal[name].time = modals[i].getElementsByTagName("Time")[0].childNodes[0].nodeValue;
+                        cardModal[name].type = modals[i].getElementsByTagName("Type")[0].childNodes[0].nodeValue;
 
                         var logo = modals[i].getElementsByTagName("Logo")[0].childNodes[0].nodeValue;
                         cardModal[name].logo = images[logo];
@@ -329,6 +331,8 @@ class CardContainer extends React.Component {
                 <Modal
                     logo={cardModal["quads"].logo}
                     title={cardModal["quads"].title}
+                    time={cardModal["quads"].time}
+                    type={cardModal["quads"].type}
                     demo={cardModal["quads"].demo}
                     remarks={cardModal["quads"].remarks}
                     desc={cardModal["quads"].desc}
@@ -386,27 +390,28 @@ class Modal extends React.Component {
         return(
             <div className="modal-container">
                 <div className="row summary">
-                    <div className="col-4">
+                    <div className="col-4 logo">
                         <img src={this.props.logo} />
                     </div>
                     <div className="col-8">
                         <h1>{this.props.title}</h1>
-                        <div className="remark-container">
-                            {remarksRender}
-                        </div>
-                        <a target="_blank" rel="noopener noreferrer" href={this.props.demo}>View the demo</a>
+                        <p className="details">{this.props.time} <span className="type">{this.props.type}</span></p>
+                        <a className="demo" target="_blank" rel="noopener noreferrer" href={this.props.demo}>View demo</a>
                     </div>
                 </div>
-                <div className="row">
+                <div className="row screenshots">
                     <div className="screenshots col-12">
                         <p>Digitally recorded images of display apparatus (or just "Screenshots"):</p>
                         <ImageScroll images={screenshots}/>
                     </div>
                 </div>
-                <div className="row">
+                <div className="row desc">
                     <div className="desc col-12" dangerouslySetInnerHTML={descHTML}>
 
                     </div>
+                </div>
+                <div className="remark-container">
+                    {remarksRender}
                 </div>
             </div>
         );
@@ -417,25 +422,111 @@ class ImageScroll extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            showFull: true,
+            currentImage: 0,
         };
+        this.openFull = this.openFull.bind(this);
+        this.closeFull = this.closeFull.bind(this);
+        this.prevImage = this.prevImage.bind(this);
+        this.nextImage = this.nextImage.bind(this);
+        this.loopIndex = this.loopIndex.bind(this);
+    }
+
+    prevImage() {
+        var {currentImage} = this.state;
+        var {images} = this.props;
+
+        currentImage = this.loopIndex(currentImage-1, images.length);
+
+        this.setState({
+            currentImage: currentImage,
+        });
+    }
+
+    nextImage() {
+        var {currentImage} = this.state;
+        var {images} = this.props;
+
+        currentImage = this.loopIndex(currentImage+1, images.length);
+
+        this.setState({
+            currentImage: currentImage,
+        });
+    }
+
+    openFull(id) {
+        var image = this.props.images[id];
+        this.setState({
+            showFull: true,
+            currentImage: id,
+        });
+    }
+
+    closeFull() {
+        this.setState({
+            showFull: false,
+        });
+    }
+
+    loopIndex(id, length) {
+        if (id < 0) {
+            id = length-1;
+        }
+        if (id >= length) {
+            id = 0;
+        }
+        return id;
     }
 
     render() {
         var {images} = this.props;
+        var {currentImage} = this.state;
 
         if (images) {
-            var previewRender = images.map((image, index) => {
+            var thumbnails = images.map((image, index) => {
                 return(
-                    <img className="thumbnail" src={image} key={image} />
+                    <img className="thumbnail" src={image} key={image} onClick={() => {this.openFull(index)}}/>
                 );
             });
+            var imagesAnimate = [
+                <img className="prev" src={images[this.loopIndex(currentImage-1, images.length)]} key="img-prev"/>,
+                <img className="current" src={images[currentImage]} key="img-current"/>,
+                <img className="next" src={images[this.loopIndex(currentImage+1, images.length)]} key="img-next"/>,
+            ];
         }
 
         return(
             <div className="image-scroll">
-                <div className="thumbnail-container">
-                    {previewRender}
+                <div className={(this.state.showFull) ? "image-container expanded" : "image-container"} >
+                    {(!this.state.showFull) ?
+                        (
+                            <div className="thumbnails">
+                                {thumbnails}
+                            </div>
+                        ) :
+                        (
+                            <div className="full">
+                                <div className="animate">
+                                    {imagesAnimate}
+                                </div>
+                                <div className="button prev" onClick={() => {this.prevImage()}}>
+                                    <svg viewBox="0 0 100 100">
+                                        <polyline points="70,10 30,50" />
+                                        <polyline points="30,50 70,90" />
+                                    </svg>
+                                </div>
+                                <div className="button next" onClick={() => {this.nextImage()}}>
+                                    <svg viewBox="0 0 100 100">
+                                        <polyline points="70,10 30,50" />
+                                        <polyline points="30,50 70,90" />
+                                    </svg>
+                                </div>
+                                <div className="button close" onClick={() => {this.closeFull()}}>
+                                    <i className="material-icons">fullscreen_exit</i>
+                                </div>
+                            </div>
+                        )
+                    }
                 </div>
             </div>
         );
