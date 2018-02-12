@@ -55,7 +55,7 @@
                 </Screenshots>
                 <Title>MadCube</Title>
                 <Time>November, 2016</Time>
-                <Type>GameJam (PC/Web game)</Type>
+                <Type>PC/Web game</Type>
                 <Remarks>
                     <Remark>
                         <Content>Thank you for your participation here's a T-shirt.</Content>
@@ -66,11 +66,11 @@
                         <Author>GameJam participants.</Author>
                     </Remark>
                     <Remark>
-                        <Content>Time's almost up and the game is still not finished.</Content>
+                        <Content>Time's almost up, and we still don't have a proper control system, or a menu, or a walking animation, or sound.</Content>
                         <Author>Me.</Author>
                     </Remark>
                     <Remark>
-                        <Content>We should have won first prize.</Content>
+                        <Content>I have no idea why we didn't win first prize.</Content>
                         <Author>Also me, 30 minutes later.</Author>
                     </Remark>
                 </Remarks>

@@ -28,13 +28,10 @@
     .modal-overlay {
         // display: none;
         pointer-events: none;
-        opacity: 0;
         transition: opacity 0.4s ease;
-
 
         &.open {
             pointer-events: all;
-            opacity: 1;
 
             .close-overlay {
                 opacity: 1;
@@ -274,12 +271,12 @@
 
                 .remark {
                     margin: 10px 0;
-                    padding: 6px 0px;
+                    padding: 10px 0px;
                     padding-left: 16px;
                     box-shadow: inset 4px 0px 0px 0px rgba(33, 150, 244, 0.7);
                     font-style: italic;
                     font-size: 18px;
-                    color: rgba(75, 75, 90, 1);
+                    color: rgba(35, 35, 50, 1);
                     transition: box-shadow 0.2s, background-color 0.2s;
 
                     &:hover {

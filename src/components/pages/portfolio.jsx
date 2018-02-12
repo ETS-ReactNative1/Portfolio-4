@@ -234,6 +234,7 @@ class CardContainer extends React.Component {
     closeModal() {
         this.setState({
             showModal: false,
+            currentModal: null,
         });
     }
 
@@ -274,7 +275,7 @@ class CardContainer extends React.Component {
                         cardModal[name].screenshots = [];
                         for (var r = 0; r < screenshotsNodes.length; r++) {
                             cardModal[name].screenshots[r] = [];
-                            var screenshot = screenshotsNodes[r].childNodes[i].nodeValue;
+                            var screenshot = screenshotsNodes[r].childNodes[0].nodeValue;
                             cardModal[name].screenshots[r] = images[screenshot];
                         }
 
@@ -328,17 +329,12 @@ class CardContainer extends React.Component {
             }
         }
 
-        if (showModal && currentModal && cardModal) {
-
-        }
-
-
         return (
             <div>
                 <div className="card-container">
                     {cardsRender}
                 </div>
-                <div className={(showModal) ? "modal-overlay open" : "modal-overlay"}>
+                <div className={(showModal) ? "modal-overlay open" : "modal-overlay close"}>
                     <div className="close-overlay" onClick={() => {this.closeModal()}}></div>
                     {(currentModal && cardModal) &&
                     <Modal
@@ -417,7 +413,7 @@ class Modal extends React.Component {
                 <div className="row rmrks">
                     <div className="col-12">
                         <div className="remark-container">
-                            <p><b>Expert opinions:</b></p>
+                            <p><b>Quotes:</b></p>
                             {remarksRender}
                         </div>
                     </div>
