@@ -132,6 +132,7 @@ class CardContainer extends React.Component {
 
         this.getData = this.getData.bind(this);
         this.showModal = this.showModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
         this.cardClick = this.cardClick.bind(this);
         this.cardFlipUp = this.cardFlipUp.bind(this);
         this.cardFlipDown = this.cardFlipDown.bind(this);
@@ -157,7 +158,7 @@ class CardContainer extends React.Component {
             selection.splice(index, 1);
         }
 
-        var maxCards = 2;
+        var maxCards = 3;
         if (selection.length >= 2) { // Atleast 2 cards selected
             var equal = true;
             var prev;
@@ -175,7 +176,6 @@ class CardContainer extends React.Component {
             }
             var timeout = 500;
             if (!equal) {
-                console.log("Sad");
                 setTimeout(() => {
                     for (var i = 0; i < selection.length; i++) {
                         this.cardFlipDown(selection[i]);
@@ -184,7 +184,6 @@ class CardContainer extends React.Component {
                 }, timeout);
             } else {
                 if (selection.length >= maxCards) {
-                    console.log("Bingo");
                     this.showModal(cardContent[selection[0]].name);
                     setTimeout(() => {
                         for (var i = 0; i < selection.length; i++) {
@@ -229,6 +228,12 @@ class CardContainer extends React.Component {
         this.setState({
             showModal: true,
             currentModal: name,
+        });
+    }
+
+    closeModal() {
+        this.setState({
+            showModal: false,
         });
     }
 
@@ -324,31 +329,29 @@ class CardContainer extends React.Component {
         }
 
         if (showModal && currentModal && cardModal) {
+
         }
 
-        if (cardModal) {
-            var modalRender = (
-                <Modal
-                    logo={cardModal["quads"].logo}
-                    title={cardModal["quads"].title}
-                    time={cardModal["quads"].time}
-                    type={cardModal["quads"].type}
-                    demo={cardModal["quads"].demo}
-                    remarks={cardModal["quads"].remarks}
-                    desc={cardModal["quads"].desc}
-                    screenshots={cardModal["quads"].screenshots}
-                />
-            );
-        }
 
         return (
             <div>
                 <div className="card-container">
                     {cardsRender}
                 </div>
-                {true &&
-                    modalRender
-                }
+                <div className={(showModal) ? "modal-overlay open" : "modal-overlay"}>
+                    <div className="close-overlay" onClick={() => {this.closeModal()}}></div>
+                    {(currentModal && cardModal) &&
+                    <Modal
+                        logo={cardModal[currentModal].logo}
+                        title={cardModal[currentModal].title}
+                        time={cardModal[currentModal].time}
+                        type={cardModal[currentModal].type}
+                        demo={cardModal[currentModal].demo}
+                        remarks={cardModal[currentModal].remarks}
+                        desc={cardModal[currentModal].desc}
+                        screenshots={cardModal[currentModal].screenshots}
+                    />}
+                </div>
             </div>
         );
     }
@@ -390,10 +393,10 @@ class Modal extends React.Component {
         return(
             <div className="modal-container">
                 <div className="row summary">
-                    <div className="col-4 logo">
+                    <div className="col-3 logo">
                         <img src={this.props.logo} />
                     </div>
-                    <div className="col-8">
+                    <div className="col-9">
                         <h1>{this.props.title}</h1>
                         <p className="details">{this.props.time} <span className="type">{this.props.type}</span></p>
                         <a className="demo" target="_blank" rel="noopener noreferrer" href={this.props.demo}>View demo</a>
