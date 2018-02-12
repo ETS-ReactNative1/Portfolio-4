@@ -566,8 +566,7 @@ export default class Portfolio extends Component {
                     <div className="row">
                         <div className="col-12">
                             <h1 className="big-title">Portfolio</h1>
-                            <p>Here you can find all my finished and in-progress projects.</p>
-                            <p>Click on each thumbnail to see full details about the project and see the demo (if available).</p>
+                            <p>Here you can browse through all my finished and in-progress projects.</p>
                         </div>
                     </div>
                 </div>

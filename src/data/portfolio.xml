@@ -1,6 +1,6 @@
 <Portfolio>
     <Modals>
-        <Modal>
+        <Modal name="quads">
             <Name>quads</Name>
             <Content>
                 <Logo>quads/quads-logo.png</Logo>
@@ -12,24 +12,24 @@
                     <Screenshot>quads/screenshots/5.png</Screenshot>
                 </Screenshots>
                 <Title>QuaDs</Title>
-                <Time>January 16, 2017</Time>
+                <Time>January, 2017</Time>
                 <Type>Mobile game</Type>
                 <Remarks>
                     <Remark>
-                        <Content>The game is so hard! And the background is STILL not bright enough.</Content>
-                        <Author>Pham Quang Huy, 2016.</Author>
+                        <Content>Your sister loves the game !</Content>
+                        <Author>My mom.</Author>
                     </Remark>
                     <Remark>
-                        <Content>Your sister loves the game !</Content>
-                        <Author>My mom, 2017.</Author>
+                        <Content>The game is so hard! And the background is STILL not bright enough.</Content>
+                        <Author>Pham Quang Huy.</Author>
                     </Remark>
                     <Remark>
                         <Content>Put it on Reddit, you will get more downloads.</Content>
-                        <Author>My brother, 2017.</Author>
+                        <Author>My brother.</Author>
                     </Remark>
                     <Remark>
                         <Content>Really made me doubt my multi-tasking ability.</Content>
-                        <Author>A random player, 2017.</Author>
+                        <Author>A random player.</Author>
                     </Remark>
                 </Remarks>
                 <Demo>https://play.google.com/store/apps/details?id=com.avoclab.QuaDs</Demo>
@@ -38,6 +38,49 @@
                     <p>QuaDs was my first game that's ever released. It has a colorful and musical gameplay that was (still is) trendy amongst mobile games. I started working on QuaDs in my last year of highschool and finished one year later, the game was then released to Google Play in January, 2017.</p>
                     <p>The engine used was GameMaker Studio, it uses GML (GameMaker Language) which is very similar to Javascript. All in-game assets were made by me. The most challenging part however was the sound, where I had to slice songs into notes, which then plays as the player taps in the game.</p>
                     <p>Another obstable was exposure, setting up a budget to spend on advertising was nowhere near cost-effective. Fortunately, a post I made about the game on social media site 9gag.com gained some popularity and this drove nearly all the downloads for my game.</p>
+                    ]]>
+                </Desc>
+            </Content>
+        </Modal>
+        <Modal name="madcube">
+            <Name>madcube</Name>
+            <Content>
+                <Logo>madcube/madcube-logo.png</Logo>
+                <Screenshots>
+                    <Screenshot>madcube/screenshots/1.png</Screenshot>
+                    <Screenshot>madcube/screenshots/2.png</Screenshot>
+                    <Screenshot>madcube/screenshots/3.png</Screenshot>
+                    <Screenshot>madcube/screenshots/4.png</Screenshot>
+                    <Screenshot>madcube/screenshots/5.png</Screenshot>
+                </Screenshots>
+                <Title>MadCube</Title>
+                <Time>November, 2016</Time>
+                <Type>GameJam (PC/Web game)</Type>
+                <Remarks>
+                    <Remark>
+                        <Content>Thank you for your participation here's a T-shirt.</Content>
+                        <Author>HackJunction.</Author>
+                    </Remark>
+                    <Remark>
+                        <Content>Hey whose game is this, can I test it?</Content>
+                        <Author>GameJam participants.</Author>
+                    </Remark>
+                    <Remark>
+                        <Content>Time's almost up and the game is still not finished.</Content>
+                        <Author>Me.</Author>
+                    </Remark>
+                    <Remark>
+                        <Content>We should have won first prize.</Content>
+                        <Author>Also me, 30 minutes later.</Author>
+                    </Remark>
+                </Remarks>
+                <Demo>http://www.cc.puv.fi/~e1601127/MadCube_WebGame/</Demo>
+                <Desc>
+                    <![CDATA[
+                    <p>MadCube was a submission for the GameJam - HackJunction 2017 where the theme was "Resurrection".</p>
+                    <p>The game's concept was that everytime a "cube" died and respawned, it would go "mad" and get stronger for a few seconds. A team of 4 (myself included) worked on the project for 48 hours before submitting it to be judged.</p>
+                    <p>The game engine was Unity, it was my first time working with this engine and also the used language C#. But as our purpose was to learn and just have fun, we decided to made the game with it anyway. Therefore difficulties were many, as we had to figure out how both the engine and the language works.</p>
+                    <p>The final project was good enough, it's playable and can give you atleast 10 seconds of gameplay (that's alot).</p>
                     ]]>
                 </Desc>
             </Content>
