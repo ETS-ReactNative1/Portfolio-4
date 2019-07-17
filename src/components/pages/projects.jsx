@@ -1,122 +1,122 @@
 import React, { Component } from 'react';
 import {importAllFrom} from 'components/utils/importer';
 
-import cardData from 'data/portfolio.xml';
+import cardData from 'data/projects.xml';
 
-class Clock extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            text: "00",
-            hour: 0,
-            minute: 0,
-            second: 0,
-            timeInt: null,
-            startTime: 1517664613623,
-        };
-        this.getTime = this.getTime.bind(this);
-        this.getRandomString = this.getRandomString.bind(this);
-        this.shuffleText = this.shuffleText.bind(this);
-    }
-
-    componentDidMount() {
-        this.getTime();
-        var timeInt = setInterval(() => {
-            this.getTime();
-        }, 1000);
-        this.setState({
-            timeInt: timeInt,
-        });
-    }
-
-    componentWillUnmount() {
-        var timeInt = this.state.timeInt;
-        clearInterval(timeInt);
-    }
-
-    getTime() {
-        var d = new Date();
-        var t = Math.floor( (d.getTime()-this.state.startTime)/1000 );
-        var hour = Math.floor( (t/60)/60 );
-        var minute = Math.floor( (t - hour*3600)/60 );
-        var second = t - hour*3600 - minute*60;
-        hour = ("0" + hour).slice(-2);
-        minute = ("0" + minute).slice(-2);
-        second = ("0" + second).slice(-2);
-        if (hour !== this.state.hour) {
-            this.shuffleText("hour", String(hour), 800, 50);
-        }
-        if (minute !== this.state.minute) {
-            this.shuffleText("minute", String(minute), 800, 50);
-        }
-        if (second !== this.state.second) {
-            this.shuffleText("second", String(second), 900, 50);
-        }
-    }
-
-    getRandomString(length) {
-        const code = "!@#$%^&*()+{};<>~|/€";
-        var randomString = "";
-        while (randomString.length < length) {
-            var randomNum = Math.floor(Math.random()*code.length);
-            randomString += code.substring(randomNum, randomNum+1);
-        }
-        return randomString;
-    }
-
-    shuffleText(stateToChange, newText, timeLimit, intTime) {
-        var correctArray = []; // Array to keep position that has been corrected
-        var to;
-        var int = setInterval(() => {
-            var current = this.state[stateToChange];
-            if (current.length !== newText.length) { // Add/Remove letters before correcting
-                var step = Math.sign(newText.length-current.length);
-                if (current.length < newText.length) {
-                    current = this.getRandomString(current.length+step);
-                } else {
-                    current = this.getRandomString(current.length+step);
-                }
-            } else {
-                if (current !== newText) {
-                    var position = Math.floor(Math.random()*current.length);
-                    while (correctArray.indexOf(position) > -1) {
-                        position = Math.floor(Math.random()*current.length);
-                    }
-                    correctArray.push(position);
-                    current = this.getRandomString(current.length);
-                    for (var i = 0; i < correctArray.length; i++) {
-                        var correctPosition = correctArray[i];
-                        var correction = newText.substring(correctPosition, correctPosition+1);
-                        current = current.substring(0, correctPosition) + correction + current.substring(correctPosition+correction.length, current.length);
-                    }
-                } else {
-                    clearTimeout(to);
-                    clearInterval(int);
-                    this.setState({
-                        [stateToChange]: newText,
-                    });
-                    return;
-                }
-            }
-            this.setState({
-                [stateToChange]: current,
-            });
-        }, intTime);
-        // Fallback if the transition takes way too long (you should make transition faster instead of relying on this - why? ugly.)
-        to = setTimeout(() => {
-            clearInterval(int);
-            this.setState({
-                text: newText,
-            });
-        }, timeLimit);
-    }
-
-    render() {
-        return (
-            <h1>{this.state.hour}:{this.state.minute}:{this.state.second}</h1>
-        );
-    }
-}
+// class Clock extends Component {
+//     constructor(props) {
+//         super(props);
+//         this.state = {
+//             text: "00",
+//             hour: 0,
+//             minute: 0,
+//             second: 0,
+//             timeInt: null,
+//             startTime: 1517664613623,
+//         };
+//         this.getTime = this.getTime.bind(this);
+//         this.getRandomString = this.getRandomString.bind(this);
+//         this.shuffleText = this.shuffleText.bind(this);
+//     }
+//
+//     componentDidMount() {
+//         this.getTime();
+//         var timeInt = setInterval(() => {
+//             this.getTime();
+//         }, 1000);
+//         this.setState({
+//             timeInt: timeInt,
+//         });
+//     }
+//
+//     componentWillUnmount() {
+//         var timeInt = this.state.timeInt;
+//         clearInterval(timeInt);
+//     }
+//
+//     getTime() {
+//         var d = new Date();
+//         var t = Math.floor( (d.getTime()-this.state.startTime)/1000 );
+//         var hour = Math.floor( (t/60)/60 );
+//         var minute = Math.floor( (t - hour*3600)/60 );
+//         var second = t - hour*3600 - minute*60;
+//         hour = ("0" + hour).slice(-2);
+//         minute = ("0" + minute).slice(-2);
+//         second = ("0" + second).slice(-2);
+//         if (hour !== this.state.hour) {
+//             this.shuffleText("hour", String(hour), 800, 50);
+//         }
+//         if (minute !== this.state.minute) {
+//             this.shuffleText("minute", String(minute), 800, 50);
+//         }
+//         if (second !== this.state.second) {
+//             this.shuffleText("second", String(second), 900, 50);
+//         }
+//     }
+//
+//     getRandomString(length) {
+//         const code = "!@#$%^&*()+{};<>~|/€";
+//         var randomString = "";
+//         while (randomString.length < length) {
+//             var randomNum = Math.floor(Math.random()*code.length);
+//             randomString += code.substring(randomNum, randomNum+1);
+//         }
+//         return randomString;
+//     }
+//
+//     shuffleText(stateToChange, newText, timeLimit, intTime) {
+//         var correctArray = []; // Array to keep position that has been corrected
+//         var to;
+//         var int = setInterval(() => {
+//             var current = this.state[stateToChange];
+//             if (current.length !== newText.length) { // Add/Remove letters before correcting
+//                 var step = Math.sign(newText.length-current.length);
+//                 if (current.length < newText.length) {
+//                     current = this.getRandomString(current.length+step);
+//                 } else {
+//                     current = this.getRandomString(current.length+step);
+//                 }
+//             } else {
+//                 if (current !== newText) {
+//                     var position = Math.floor(Math.random()*current.length);
+//                     while (correctArray.indexOf(position) > -1) {
+//                         position = Math.floor(Math.random()*current.length);
+//                     }
+//                     correctArray.push(position);
+//                     current = this.getRandomString(current.length);
+//                     for (var i = 0; i < correctArray.length; i++) {
+//                         var correctPosition = correctArray[i];
+//                         var correction = newText.substring(correctPosition, correctPosition+1);
+//                         current = current.substring(0, correctPosition) + correction + current.substring(correctPosition+correction.length, current.length);
+//                     }
+//                 } else {
+//                     clearTimeout(to);
+//                     clearInterval(int);
+//                     this.setState({
+//                         [stateToChange]: newText,
+//                     });
+//                     return;
+//                 }
+//             }
+//             this.setState({
+//                 [stateToChange]: current,
+//             });
+//         }, intTime);
+//         // Fallback if the transition takes way too long (you should make transition faster instead of relying on this - why? ugly.)
+//         to = setTimeout(() => {
+//             clearInterval(int);
+//             this.setState({
+//                 text: newText,
+//             });
+//         }, timeLimit);
+//     }
+//
+//     render() {
+//         return (
+//             <h1>{this.state.hour}:{this.state.minute}:{this.state.second}</h1>
+//         );
+//     }
+// }
 
 class CardContainer extends React.Component {
     constructor(props) {
@@ -245,11 +245,11 @@ class CardContainer extends React.Component {
 				if (req.status === 200) {
 					var response = req.responseXML;
                     var {cardContent, cardFlipState, cardModal} = this.state;
-                    var images = importAllFrom(require.context("img/portfolio", true, /\.(png|jpe?g|svg)$/));
+                    var images = importAllFrom(require.context("img/projects", true, /\.(png|jpe?g|svg)$/));
 
                     var cards = response.getElementsByTagName("Card");
                     cardContent = [];
-                    for (var i = 0; i < cards.length; i++) {
+                    for (let i = 0; i < cards.length; i++) {
                         cardContent[i] = {};
                         var img = cards[i].getElementsByTagName("Img")[0].childNodes[0].nodeValue;
                         cardContent[i].img = images[img];
@@ -259,7 +259,7 @@ class CardContainer extends React.Component {
 
                     var modals = response.getElementsByTagName("Modal");
                     cardModal = [];
-                    for (var i = 0; i < modals.length; i++) {
+                    for (let i = 0; i < modals.length; i++) {
                         var name = modals[i].getElementsByTagName("Name")[0].childNodes[0].nodeValue;
                         cardModal[name] = {};
 
@@ -273,7 +273,7 @@ class CardContainer extends React.Component {
 
                         var screenshotsNodes = modals[i].getElementsByTagName("Screenshot");
                         cardModal[name].screenshots = [];
-                        for (var r = 0; r < screenshotsNodes.length; r++) {
+                        for (let r = 0; r < screenshotsNodes.length; r++) {
                             cardModal[name].screenshots[r] = [];
                             var screenshot = screenshotsNodes[r].childNodes[0].nodeValue;
                             cardModal[name].screenshots[r] = images[screenshot];
@@ -281,7 +281,7 @@ class CardContainer extends React.Component {
 
                         var remarkNodes = modals[i].getElementsByTagName("Remark");
                         cardModal[name].remarks = [];
-                        for (var r = 0; r < remarkNodes.length; r++) {
+                        for (let r = 0; r < remarkNodes.length; r++) {
                             cardModal[name].remarks[r] = {};
                             var remarkContent = remarkNodes[r].getElementsByTagName("Content")[0].childNodes[0].nodeValue;
                             var remarkAuthor = remarkNodes[r].getElementsByTagName("Author")[0].childNodes[0].nodeValue;
@@ -390,7 +390,7 @@ class Modal extends React.Component {
             <div className="modal-container">
                 <div className="row summary">
                     <div className="col-3 logo">
-                        <img src={this.props.logo} />
+                        <img alt="logo  " src={this.props.logo} />
                     </div>
                     <div className="col-9">
                         <h1>{this.props.title}</h1>
@@ -460,7 +460,6 @@ class ImageScroll extends React.Component {
     }
 
     openFull(id) {
-        var image = this.props.images[id];
         this.setState({
             showFull: true,
             currentImage: id,
@@ -490,13 +489,13 @@ class ImageScroll extends React.Component {
         if (images) {
             var thumbnails = images.map((image, index) => {
                 return(
-                    <img className="thumbnail" src={image} key={image} onClick={() => {this.openFull(index)}}/>
+                    <img alt="thumbnail" className="thumbnail" src={image} key={image} onClick={() => {this.openFull(index)}}/>
                 );
             });
             var imagesAnimate = [
-                <img className="prev" src={images[this.loopIndex(currentImage-1, images.length)]} key="img-prev"/>,
-                <img className="current" src={images[currentImage]} key="img-current"/>,
-                <img className="next" src={images[this.loopIndex(currentImage+1, images.length)]} key="img-next"/>,
+                <img alt="" className="prev" src={images[this.loopIndex(currentImage-1, images.length)]} key="img-prev"/>,
+                <img alt="" className="current" src={images[currentImage]} key="img-current"/>,
+                <img alt="" className="next" src={images[this.loopIndex(currentImage+1, images.length)]} key="img-next"/>,
             ];
         }
 
@@ -553,16 +552,16 @@ class Card extends React.Component {
     }
 }
 
-export default class Portfolio extends Component {
+export default class Projects extends Component {
 
     render() {
         return (
-            <div className="portfolio">
+            <div className="projects">
                 <div className="intro">
                     <div className="row">
                         <div className="col-12">
-                            <h1 className="big-title">Portfolio</h1>
-                            <p>Here you can browse through all my finished and in-progress projects.</p>
+                            <h1 className="big-title">Projects</h1>
+                            <p className="big-desc">Here you can browse through all my finished and in-progress projects (mostly games). More coming soon!</p>
                         </div>
                     </div>
                 </div>

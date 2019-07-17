@@ -46,10 +46,9 @@ export default class Nav extends Component {
                         </clipPath>
                     </svg>
                     <div className="menu-nav">
-                        <div className="link-container"><Link onClick={() => {this.closeMenu()}} className="link" to="/">Home</Link></div>
-                        <div className="link-container"><Link onClick={() => {this.closeMenu()}} className="link" to="/portfolio">Portfolio</Link></div>
-                        <div className="link-container"><Link onClick={() => {this.closeMenu()}} className="link" to="/fun">Fün</Link></div>
-                        <div className="link-container"><Link onClick={() => {this.closeMenu()}} className="link" to="/contact">Contact</Link></div>
+                        <div className="link-container"><Link onClick={() => {window.scrollTo(0, 0); this.closeMenu()}} className="link" to="/">Home</Link></div>
+                        <div className="link-container"><Link onClick={() => {window.scrollTo(0, 0); this.closeMenu()}} className="link" to="/projects">Projects</Link></div>
+                        <div className="link-container"><Link onClick={() => {window.scrollTo(0, 0); this.closeMenu()}} className="link" to="/contact">Contact</Link></div>
                     </div>
                 </div>
             </div>

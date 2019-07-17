@@ -4,6 +4,8 @@ import material from 'img/material.png';
 import vaasa from 'img/vaasa.jpg';
 import molly from 'img/molly.jpg';
 import space from 'img/space.jpg';
+import { Link } from 'react-router-dom';
+
 
 class Section extends Component {
     generateNavButtons() {
@@ -116,9 +118,9 @@ export default class Home extends Component {
                 "Enjoy your stay",
                 <span>
                     <p>So you know all there is about me, now what ?</p>
-                    <p>If you are just a curious visitor, I made this for you.</p>
-                    <p>If you are an employer, please feel free to checkout my portfolio.</p>
-                    <p>Got something to say? To the contact section you go!</p>
+                    <p>Got something to say? To the <Link className="link" to="/contact">Contact</Link> you go!</p>
+                    <p>If you are an employer, please feel free to checkout my portfol-... no wait, this website <b>is</b> my portfolio. But I have some <Link className="link" to="/projects">Projects</Link> so.</p>
+                    <p>If you are just a random Internet wanderer, enjoy your time!</p>
                 </span>
             ],
         ];

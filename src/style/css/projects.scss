@@ -1,8 +1,15 @@
-.portfolio {
+.projects {
     padding: 40px 120px;
-    font-size: 20px;
+    font-size: 22px;
+    font-weight: 300;
     background-color: #282C35;
+    min-height: 100vh;
     color: #fafafa;
+
+    .big-desc {
+        font-size: 28px;
+        font-weight: 300;
+    }
 
     h1 {
         font-family: "Open Sans", sans-serif;
@@ -297,6 +304,7 @@
     }
 
     .card {
+        cursor: pointer;
         box-sizing: border-box;
         flex: 1;
         min-width: 200px;

@@ -16,12 +16,12 @@ export default class Contact extends Component {
                         <hr></hr>
                         <p><i className="material-icons">phone_android</i>+358 (0) 417 276 866</p>
                         <p><i className="material-icons">mail_outline</i><a href="mailto:mindstorm1998@gmail.com">mindstorm1998@gmail.com</a></p>
-                        <p><i className="material-icons">link</i><a href="https://www.av0c.com/">www.av0c.com</a> (Offline)</p>
+                        <p><i className="material-icons">link</i><a href="http://avoc.me/">www.avoc.me</a> (You're here!)</p>
                         <div className="row social">
                             <a target="_blank" rel="noopener noreferrer" href="https://github.com/Av0c" className="fa fa-github"><span></span></a>
                             <a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/duongkinh.quyen" className="fa fa-facebook"><span></span></a>
                             <a target="_blank" rel="noopener noreferrer" href="https://www.snapchat.com/add/av0cadodo" className="fa fa-snapchat-ghost"><span></span></a>
-                            <a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/av0c_ado/" className="fa fa-instagram"><span></span></a>
+                            <a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/av0c_/" className="fa fa-instagram"><span></span></a>
                         </div>
                     </div>
                 </div>

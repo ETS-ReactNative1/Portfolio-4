@@ -3,22 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "node-sass-chokidar": "0.0.3",
-    "npm-run-all": "^4.1.2",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
+    "node-sass-chokidar": "1.3.4",
+    "npm-run-all": "^4.1.5",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
     "react-router": "^2.0.0",
-    "react-router-dom": "^4.2.2",
-    "react-scripts": "1.1.0"
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "1.1.0",
+    "merge": "^1.2.1"
   },
   "scripts": {
-    "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ && rm build/static/css/*.map",
+    "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ ",
     "build-css-debug": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
     "watch-css": "npm run build-css-debug && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
     "start-js": "react-scripts start",
     "start": "npm-run-all -p watch-css start-js",
-    "build-js": "react-scripts build && rm build/static/js/*.map",
-    "build-js-debug": "react-scripts build && rm build/static/js/*.map",
+    "build-js": "react-scripts build",
+    "build-js-debug": "react-scripts build",
     "build": "npm-run-all build-css build-js",
     "build-debug": "npm-run-all build-css-debug build-js-debug",
     "test": "react-scripts test --env=jsdom",
@@ -26,7 +27,7 @@
   },
   "devDependencies": {
     "envify": "^4.1.0",
-    "uglify-js": "^3.3.9",
+    "uglify-js": "^3.4.9",
     "uglifyify": "^4.0.5"
   }
 }
